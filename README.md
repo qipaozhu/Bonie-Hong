@@ -25,6 +25,6 @@ It only have Chinese. 这只有中文。
 - 不会在班上宣扬
 ### 确定加入
 - 钉钉扫二维码加入我们，经过审核后进入
-![This is an image](./joinus.jpg)
+![钉钉团队号MPHV4333](./joinus.jpg)
 # 玩法
 - 请查看wiki
