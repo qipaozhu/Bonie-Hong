@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - CanNPC
-  - 
+  - EnemyHL
   - 
   - 
   - 
@@ -41,4 +41,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: People
+    uniqueID: 1054376085
     locked: 0

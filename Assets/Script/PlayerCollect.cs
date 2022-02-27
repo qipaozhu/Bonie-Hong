@@ -15,8 +15,8 @@ public class PlayerCollect : MonoBehaviour
     public int PmaxHealth { get { return maxHealth; } }
     //====无敌时间====
     private bool noDamage = false;
-    private int timeNoDamage;
-    private int timeNoDamageMax = 300;
+    private float timeNoDamage;
+    private float timeNoDamageMax = 1f;
     //====默认朝向====
     private Vector2 lookWhere = new Vector2(1, 0);
 
@@ -28,20 +28,25 @@ public class PlayerCollect : MonoBehaviour
 
     void FixedUpdate()
     {
+        //====死亡====
+        if(nowHealth <= 0)
+        {
+            Destroy(this);
+        }
+        //====看的方向和移动方向====
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
-        
         Vector2 moveWhere = new Vector2(moveX, moveY);
-        if(moveWhere.x != 0 || moveWhere.y != 0)
-        {
-            lookWhere = moveWhere;
-        }
+        if(moveWhere.x != 0 || moveWhere.y != 0) lookWhere = moveWhere;
+
         //====移动====
         Vector2 pos = ridy.position;
         pos.x += moveX * speed * Time.deltaTime;
         pos.y += moveY * speed * Time.deltaTime;
         ridy.MovePosition(pos);
+        //====血量条====
         UIhealthyManaer.instance.UpdateHealthBar(maxHealth, nowHealth);
+
         //====交互====
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -49,29 +54,23 @@ public class PlayerCollect : MonoBehaviour
             if (hitnpc.collider != null)
             {
                 HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
-                if (wc != null)
-                {
-                    Debug.Log("wc done");
-                }
+                if (wc != null) Debug.Log("是厕所");
             }
         }
+
         //====无敌时间减去====
         if (noDamage)
         {
-            if (timeNoDamage == 0)
-            {
-                noDamage = false;
-            }
-            else if (timeNoDamage != 0)
-            {
-                timeNoDamage = timeNoDamage - 1;
-            }
+            if (timeNoDamage == 0) noDamage = false;
+            else if (timeNoDamage != 0) timeNoDamage = timeNoDamage - Time.deltaTime;
         }
         //====
     }
+
+    //血量变化
     public void ChangeHealth(int changeHealth)
     {
-        if (noDamage & changeHealth <= 1)
+        if (noDamage && changeHealth <= 1)
         {
             Debug.Log("无敌");
             return;
