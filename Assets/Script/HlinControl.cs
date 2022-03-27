@@ -6,36 +6,43 @@ using Pathfinding;
 public class HlinControl : MonoBehaviour
 {
 	public static HlinControl instance { get; private set; }
+
 	public Transform player;
 	public Transform hlHome;
-	Transform target;
+    public Transform hlNotFound;
+
+    Transform target;
 	IAstarAI ai;
 
-	public void setTarget(int v)
+    private void Awake()
     {
-        if (v == 1) target = player;
-        if (v == 2) target = hlHome;
-		Debug.Log(v);
+        instance = this;
     }
-	
-	void Start()
+
+    void Start()
     {
-		instance = this;
 		ai = GetComponent<IAstarAI>();
-        target = player;
     }
 
     // Update is called once per frame
     void Update()
     {
 		ai.destination = target.position;
+
+        if (CenterCtrl.instance.isHCM)
+        {
+            bool isDisalbe = PlayDisable.instance.playIsDisable;
+            if (isDisalbe) SetTarget(3);
+            if (!isDisalbe) SetTarget(1);
+        }
     }
 
-    private void OnCollisionStay2D(Collision2D other)
+    public void SetTarget(int v)
     {
-        PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        if (pc == null) return;
-        
+        if (v == 1) target = player;
+        if (v == 2) target = hlHome;
+        if (v == 3) target = hlNotFound;
+        Debug.Log("目标人物:" + v);
     }
 
     /// <summary>

@@ -11,10 +11,16 @@ public class HlinDamage : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
-    private void OnCollisionStay2D(Collision2D other)
+
+    private void OnTriggerStay2D(Collider2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        if (pc == null) return;
-        pc.ChangeHealth(damageHealth);
+        Debug.Log("ÓÐÊµÌå");
+        if (pc == null)
+        {
+            Debug.Log("¿Õ");
+            return;
+        }
+        PlayerCollect.instance.ChangeHealth(damageHealth);
     }
 }

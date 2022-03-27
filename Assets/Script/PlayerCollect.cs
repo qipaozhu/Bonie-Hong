@@ -7,6 +7,7 @@ public class PlayerCollect : MonoBehaviour
     public static PlayerCollect instance { get; private set; }
     Rigidbody2D ridy;
     public float speed;
+    public GameObject deadMenu;
     //====设置血量====
     private int maxHealth = 20;
     private int nowHealth = 20;
@@ -22,8 +23,13 @@ public class PlayerCollect : MonoBehaviour
 
     void Start()
     {
-        instance = this;
+        nowHealth = maxHealth;
         ridy = GetComponent<Rigidbody2D>();
+    }
+
+    private void Awake()
+    {
+        instance = this;
     }
 
     void FixedUpdate()
@@ -31,6 +37,7 @@ public class PlayerCollect : MonoBehaviour
         //====死亡====
         if(nowHealth <= 0)
         {
+            deadMenu.SetActive(true);
             Destroy(this);
         }
         //====看的方向和移动方向====
@@ -50,21 +57,28 @@ public class PlayerCollect : MonoBehaviour
         //====交互====
         if (Input.GetKeyDown(KeyCode.E))
         {
-            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere , 1f, LayerMask.GetMask("CanNPC"));
+            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere , 10f, LayerMask.GetMask("CanNPC"));
             if (hitnpc.collider != null)
             {
+                //厕所交互
                 HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
-                if (wc != null) Debug.Log("是厕所");
+                if (wc != null)
+                {
+                    this.gameObject.SetActive(false);
+                    PlayDisable.instance.playIsDisable = true;
+                    Debug.Log("设置玩家已经禁用状态...");
+                }
+                //交互在此添加
             }
         }
 
         //====无敌时间减去====
         if (noDamage)
         {
-            if (timeNoDamage == 0) noDamage = false;
-            else if (timeNoDamage != 0) timeNoDamage = timeNoDamage - Time.deltaTime;
+            if (timeNoDamage <= 0) noDamage = false;
+            else if (timeNoDamage > 0) timeNoDamage = timeNoDamage - Time.deltaTime;
         }
-        //====
+        //====等====
     }
 
     //血量变化
@@ -80,4 +94,5 @@ public class PlayerCollect : MonoBehaviour
         nowHealth = Mathf.Clamp(changeHealth + nowHealth, 0, maxHealth);
         Debug.Log(nowHealth + "和" + maxHealth);
     }
+
 }

@@ -7,7 +7,7 @@ public class MenuControl : MonoBehaviour
 {
     public void StartHCM()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     public void QuitHCM()
     {
@@ -15,6 +15,7 @@ public class MenuControl : MonoBehaviour
     }
     public void BackMenu()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
+    
 }
