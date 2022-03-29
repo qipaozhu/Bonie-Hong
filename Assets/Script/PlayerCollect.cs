@@ -20,14 +20,18 @@ public class PlayerCollect : MonoBehaviour
     private float timeNoDamageMax = 1f;
     //====默认朝向====
     private Vector2 lookWhere = new Vector2(1, 0);
+    //====道具数量====
+    int prop1Conut = 0; //道具1：遗照
+    public int Prop1Conut { get { return prop1Conut; } }
 
+    //======函数=======
     void Start()
     {
         nowHealth = maxHealth;
         ridy = GetComponent<Rigidbody2D>();
     }
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
     }
@@ -37,6 +41,7 @@ public class PlayerCollect : MonoBehaviour
         //====死亡====
         if(nowHealth <= 0)
         {
+            SoundHelper.Dead();
             deadMenu.SetActive(true);
             Destroy(this);
         }
@@ -55,22 +60,7 @@ public class PlayerCollect : MonoBehaviour
         UIhealthyManaer.instance.UpdateHealthBar(maxHealth, nowHealth);
 
         //====交互====
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere , 10f, LayerMask.GetMask("CanNPC"));
-            if (hitnpc.collider != null)
-            {
-                //厕所交互
-                HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
-                if (wc != null)
-                {
-                    this.gameObject.SetActive(false);
-                    PlayDisable.instance.playIsDisable = true;
-                    Debug.Log("设置玩家已经禁用状态...");
-                }
-                //交互在此添加
-            }
-        }
+        Echicken();
 
         //====无敌时间减去====
         if (noDamage)
@@ -78,7 +68,9 @@ public class PlayerCollect : MonoBehaviour
             if (timeNoDamage <= 0) noDamage = false;
             else if (timeNoDamage > 0) timeNoDamage = timeNoDamage - Time.deltaTime;
         }
-        //====等====
+        //====道具====
+        Prop();
+
     }
 
     //血量变化
@@ -93,6 +85,43 @@ public class PlayerCollect : MonoBehaviour
         noDamage = true;
         nowHealth = Mathf.Clamp(changeHealth + nowHealth, 0, maxHealth);
         Debug.Log(nowHealth + "和" + maxHealth);
+    }
+
+    //E交互
+    void Echicken()
+    {
+        if (Input.GetButtonDown("jiaohu"))
+        {
+            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere, 10f, LayerMask.GetMask("CanNPC"));
+            if (hitnpc.collider != null)
+            {
+                //厕所交互
+                HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
+                if (wc != null)
+                {
+                    PlayDisable.instance.playIsDisable = true;
+                    Debug.Log("设置玩家已经禁用状态...");
+                    SoundHelper.EnterToilet();
+                    this.gameObject.SetActive(false);
+                }
+
+                //交互在此添加
+
+            }
+        }
+    }
+    
+    public void SetProp(int whatToAdd,int howMuch)
+    {
+        if(whatToAdd == 1)
+        {
+            prop1Conut += howMuch;
+        }
+    }
+
+    void Prop()
+    {
+        
     }
 
 }

@@ -22,9 +22,10 @@ public class PlayDisable : MonoBehaviour
         if (playIsDisable == true)
         {
             Debug.Log("玩家是禁用");
-            exitWCNotice.SetActive(true);
+            exitWCNotice.SetActive(true); //设置提示为显示
             if (Input.GetKeyDown(KeyCode.X))
             {
+                SoundHelper.EnterToilet();
                 player.SetActive(true);
                 playIsDisable = false;
             }

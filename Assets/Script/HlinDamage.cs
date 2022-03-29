@@ -12,14 +12,21 @@ public class HlinDamage : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+
     private void OnTriggerStay2D(Collider2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        Debug.Log("有实体");
+        //Debug.Log("有实体");
         if (pc == null)
         {
-            Debug.Log("空");
+            //Debug.Log("空");
             return;
+        }
+        if (HlinControl.instance.timeOver == true)
+        {
+            HlinControl.Found();
+            HlinControl.instance.timeOver = false;
+            Debug.Log("Hey");
         }
         PlayerCollect.instance.ChangeHealth(damageHealth);
     }
