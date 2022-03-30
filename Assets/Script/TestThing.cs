@@ -7,6 +7,9 @@ public class TestThing : MonoBehaviour
     int va;
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            CenterCtrl.instance.SetTree(-100);
+        }
     }
 }

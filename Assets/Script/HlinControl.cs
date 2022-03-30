@@ -11,11 +11,14 @@ public class HlinControl : MonoBehaviour
 	public Transform hlHome;
     public Transform hlNotFound;
 
-    public float time = 6;
+    float time = 6;
     public bool timeOver = false;
-    public static AudioSource ads;
-    public static AudioClip notFound;
-    public static AudioClip isFound;
+
+    public int speed;
+    static AudioSource ads;
+    static AudioClip notFound;
+    static AudioClip isFound;
+    static AudioClip cantGo;
 
     Transform target;
 	IAstarAI ai;
@@ -26,12 +29,14 @@ public class HlinControl : MonoBehaviour
         ads = GetComponent<AudioSource>();
         notFound = Resources.Load<AudioClip>("WherePeople");
         isFound = Resources.Load<AudioClip>("TooEasy");
+        cantGo = Resources.Load<AudioClip>("BuyWH");
         ai = GetComponent<IAstarAI>();
     }
 
     void Start()
     {
         target = player.transform;
+        ai.maxSpeed = speed;
     }
 
     // Update is called once per frame
@@ -43,10 +48,8 @@ public class HlinControl : MonoBehaviour
         if (time < 0)
         {
             timeOver = true;
-            time = 6;
+            time = 3;
         }
-        Debug.Log(time);
-        Debug.Log(timeOver);
 
         if (target == hlNotFound && timeOver)
         {
@@ -66,12 +69,12 @@ public class HlinControl : MonoBehaviour
         }
     }
 
+    //设置目标
     void SetTarget(int v)
     {
         if (v == 1) target = player;
         if (v == 2) target = hlHome;
         if (v == 3) target = hlNotFound;
-        Debug.Log("目标人物:" + v);
     }
 
     //出没设置
@@ -92,6 +95,14 @@ public class HlinControl : MonoBehaviour
         ads.PlayOneShot(isFound);
     }
 
+    //设置速度
+    public void SetSpeed()
+    {
+        ai.maxSpeed = 1;
+        ads.PlayOneShot(cantGo);
+        Invoke("ResetSpeed", 5);
+    }
+    void ResetSpeed() { ai.maxSpeed = speed; }
 
 
     /// <summary>

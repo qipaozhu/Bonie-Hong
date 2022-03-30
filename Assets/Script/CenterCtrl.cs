@@ -17,6 +17,8 @@ public class CenterCtrl : MonoBehaviour
     public Image hlBar;
     public Text hlText;
     public Image treeFullBar;
+    public GameObject notice;
+    public Text noticeText;
 
     //====是否出没====
     bool IsHCM = false;
@@ -28,7 +30,7 @@ public class CenterCtrl : MonoBehaviour
 
     //====道具====
     public Text prop1;
-
+    public Text prop2;
     //====技能条====
     public GameObject propBar;
     
@@ -49,7 +51,7 @@ public class CenterCtrl : MonoBehaviour
             hlText.text = Mathf.Floor(nextHBonie).ToString();
             nextHBonie = nextHBonie - Time.deltaTime;
         }
-        //当树=0时
+        //当树<=0时
         if(TreeCount <= 0)
         {
             endNotice.SetActive(true);
@@ -59,7 +61,10 @@ public class CenterCtrl : MonoBehaviour
         float fillamount = (float)TreeCount / (float)maxTreeCount;
         treeFullBar.fillAmount = 1 - fillamount;
 
-        if (Input.GetButtonDown("Cancel")) MenuControl.instance.Pause(); // 按下绑定为Cancel的按键时,暂停
+        if (Input.GetButtonDown("Cancel"))  // 按下绑定为Cancel的按键时,暂停
+        {
+            MenuControl.instance.Pause();
+        }
         if (Input.GetButtonDown("Prop")) //技能栏
         {
             if (propBar.activeSelf) propBar.SetActive(false);
@@ -68,7 +73,9 @@ public class CenterCtrl : MonoBehaviour
 
         if ( nextHBonie <= 0 && !isHCM)// 如果下一次出没小于0，HCM函数
             HCMfuncion();
-        prop1.text =PlayerCollect.instance.Prop1Conut.ToString(); // 设置道具一数量文字
+        //====设置道具一数量文字====
+        prop1.text = PlayerCollect.instance.Prop1Conut.ToString();
+        prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
     }
 
     void Start()
@@ -82,7 +89,7 @@ public class CenterCtrl : MonoBehaviour
     //====调整数量====
     public void SetTree(int i)
     {
-        TreeCount = TreeCount + i;
+        TreeCount += i;
     }
 
 
@@ -93,7 +100,18 @@ public class CenterCtrl : MonoBehaviour
         //====功能====
         SoundHelper.hCome();
         //===========
-        Invoke("ResetHL", 40f);
+        Invoke("ResetHL", 60f);
         hlText.text = "出没!隐蔽";
     }
+
+    //提示功能
+    public void HaveNotice(string whatToNotice)
+    {
+        Debug.Log("提示：" + whatToNotice);
+        notice.SetActive(true);
+        noticeText.text = whatToNotice;
+        SoundHelper.Beep();
+        Invoke("EndNotice", 2);
+    }
+    void EndNotice() { notice.SetActive(false); }
 }

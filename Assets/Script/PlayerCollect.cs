@@ -6,6 +6,7 @@ public class PlayerCollect : MonoBehaviour
 {
     public static PlayerCollect instance { get; private set; }
     Rigidbody2D ridy;
+    Animator anim;
     public float speed;
     public GameObject deadMenu;
     //====设置血量====
@@ -23,12 +24,16 @@ public class PlayerCollect : MonoBehaviour
     //====道具数量====
     int prop1Conut = 0; //道具1：遗照
     public int Prop1Conut { get { return prop1Conut; } }
+    int prop2Conut = 0; //道具1：遗照
+    public int Prop2Conut { get { return prop2Conut; } }
 
     //======函数=======
     void Start()
     {
+        Debug.Log("Start函数");
         nowHealth = maxHealth;
         ridy = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Awake()
@@ -49,13 +54,19 @@ public class PlayerCollect : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         Vector2 moveWhere = new Vector2(moveX, moveY);
-        if(moveWhere.x != 0 || moveWhere.y != 0) lookWhere = moveWhere;
+        if (moveWhere.x != 0 || moveWhere.y != 0) 
+        { 
+            lookWhere = moveWhere;
+            anim.SetFloat("moveX", lookWhere.x);
+            anim.SetFloat("moveY", lookWhere.y);
+        }
 
         //====移动====
         Vector2 pos = ridy.position;
         pos.x += moveX * speed * Time.deltaTime;
         pos.y += moveY * speed * Time.deltaTime;
         ridy.MovePosition(pos);
+
         //====血量条====
         UIhealthyManaer.instance.UpdateHealthBar(maxHealth, nowHealth);
 
@@ -92,21 +103,36 @@ public class PlayerCollect : MonoBehaviour
     {
         if (Input.GetButtonDown("jiaohu"))
         {
-            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere, 10f, LayerMask.GetMask("CanNPC"));
+            RaycastHit2D hitnpc = Physics2D.Raycast(ridy.position, lookWhere, 2f, LayerMask.GetMask("CanNPC"));
             if (hitnpc.collider != null)
             {
                 //厕所交互
                 HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
                 if (wc != null)
                 {
-                    PlayDisable.instance.playIsDisable = true;
-                    Debug.Log("设置玩家已经禁用状态...");
-                    SoundHelper.EnterToilet();
-                    this.gameObject.SetActive(false);
+                    if (wc.IsT)
+                    {
+                        PlayDisable.instance.playIsDisable = true;
+                        Debug.Log("设置玩家已经禁用状态...");
+                        SoundHelper.EnterToilet();
+                        this.gameObject.SetActive(false);
+                    }
+                    
+                    if (wc.IsP)
+                    {
+                        if (Random.Range(1, 50) != 23)
+                        {
+                            CenterCtrl.instance.HaveNotice("进入失败！");
+                            return;
+                        }
+                        PlayDisable.instance.playIsDisable = true;
+                        SoundHelper.EnterToilet();
+                        this.gameObject.SetActive(false);
+                    }
                 }
 
                 //交互在此添加
-
+                //****** = Get;
             }
         }
     }
@@ -116,6 +142,10 @@ public class PlayerCollect : MonoBehaviour
         if(whatToAdd == 1)
         {
             prop1Conut += howMuch;
+        }
+        if(whatToAdd == 2)
+        {
+            prop2Conut += howMuch;
         }
     }
 

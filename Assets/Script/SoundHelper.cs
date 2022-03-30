@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class SoundHelper : MonoBehaviour
 {
-    public static AudioSource ads;
+    static AudioSource ads;
     //====素材====
-    public static AudioClip warnHL;
-    public static AudioClip normalbg;
-    public static AudioClip tpSound;
-    public static AudioClip enterToilet;
-    public static AudioClip dead;
-    public static AudioClip beep;
-    public static AudioClip ok;
-    public static AudioClip get;
-    public static AudioClip destory;
+    static AudioClip warnHL;
+    static AudioClip normalbg;
+    static AudioClip tpSound;
+    static AudioClip enterToilet;
+    static AudioClip dead;
+    static AudioClip beep;
+    static AudioClip ok;
+    static AudioClip get;
+    static AudioClip destory;
 
     void Start()
     {
@@ -47,18 +47,18 @@ public class SoundHelper : MonoBehaviour
     }
     public static void Beep()
     {
-        ads.PlayOneShot(beep);
+        ads.PlayOneShot(beep); //（Windows）鸣叫
     }
     public static void OK()
     {
-        ads.PlayOneShot(ok);
+        ads.PlayOneShot(ok); //可以
     }
     public static void Get()
     {
-        ads.PlayOneShot(get);
+        ads.PlayOneShot(get); //拾取物品
     }
     public static void DestroyTree()
     {
-        ads.PlayOneShot(destory);
+        ads.PlayOneShot(destory); //破坏树
     }
 }

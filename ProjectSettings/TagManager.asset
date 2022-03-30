@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Laer
+  - Toitet
+  - Parkbike
   layers:
   - Default
   - TransparentFX
