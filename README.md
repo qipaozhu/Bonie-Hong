@@ -1,16 +1,16 @@
 # Information
 It only have Chinese. 这只有中文。
 # 泓出没
-![logo](./logo.png)
+![logo](https://qipaozhu.github.io/Assets/BonieHong/logo.png)
 - 泓出没是一位同学为报复泓做出的作品与想法，
 同时进行持续更新。如果泓欺负一定程度，会发布正式版。
 # 如何打开
 使用Unity2020.3.26f1c1版本，含有AIpathfinding项目（v4.7.1）。我使用Visual Studio 2019进行C#脚本编辑
 # 屏幕截图（3.27截屏，仅供参考）
-![1](./Shot1.png)
-![2](./Shot2.png)
-![3](./Shot3.png)
-![4](./Shot4.png)
+![1](https://qipaozhu.github.io/Assets/BonieHong/Shot1.png)
+![2](https://qipaozhu.github.io/Assets/BonieHong/Shot2.png)
+![3](https://qipaozhu.github.io/Assets/BonieHong/Shot3.png)
+![4](https://qipaozhu.github.io/Assets/BonieHong/Shot4.png)
 # 进度
 正常情况下我们都会在进行更新
 ## 目前进度
