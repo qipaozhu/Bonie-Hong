@@ -7,6 +7,7 @@ TagManager:
   - Laer
   - Toitet
   - Parkbike
+  - Light
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - UI
   - CanNPC
   - EnemyHL
-  - 
-  - 
+  - Decorate
+  - MiniMapDisplay
   - 
   - 
   - 
@@ -46,4 +47,7 @@ TagManager:
     locked: 0
   - name: People
     uniqueID: 1054376085
+    locked: 0
+  - name: CantSee
+    uniqueID: 3896004227
     locked: 0

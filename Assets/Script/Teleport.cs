@@ -15,8 +15,28 @@ public class Teleport : MonoBehaviour
 
         if (Input.GetButtonDown("jiaohu"))
         {
-            player.position = whereToGo.position;
-            SoundHelper.telePort();
+            if (GameObject.Find("CenterCtrl").GetComponent<CenterCtrl>() != null)
+            {
+                if (!CenterCtrl.instance.isTeleDone)
+                {
+                    CenterCtrl.instance.HaveNotice("«Îµ»¥˝¿‰»¥£°");
+                    return;
+                }
+                player.position = whereToGo.position;
+                SoundHelper.telePort();
+                CenterCtrl.instance.TeleDone();
+            }
+            else if (GameObject.Find("CenterCtrl").GetComponent<CenterCtrl_human>() != null)
+            {
+                if (!CenterCtrl_human.instance.isTeleDone)
+                {
+                    CenterCtrl_human.instance.HaveNotice("«Îµ»¥˝¿‰»¥£°");
+                    return;
+                }
+                player.position = whereToGo.position;
+                SoundHelper.telePort();
+                CenterCtrl_human.instance.TeleDone();
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other)

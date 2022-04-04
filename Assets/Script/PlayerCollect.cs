@@ -110,27 +110,57 @@ public class PlayerCollect : MonoBehaviour
                 HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
                 if (wc != null)
                 {
-                    if (wc.IsT)
+                    //正常模式厕所交互
+                    if (GameObject.Find("CenterCtrl").GetComponent<CenterCtrl>() != null)
                     {
-                        PlayDisable.instance.playIsDisable = true;
-                        Debug.Log("设置玩家已经禁用状态...");
-                        SoundHelper.EnterToilet();
-                        this.gameObject.SetActive(false);
+                        if (wc.IsT)
+                        {
+                            PlayDisable.instance.playIsDisable = true;
+                            Debug.Log("设置玩家已经禁用状态...");
+                            SoundHelper.EnterToilet();
+                            this.gameObject.SetActive(false);
+                        }
+
+                        if (wc.IsP)
+                        {
+                            if (Random.Range(1, 50) != 23)
+                            {
+                                CenterCtrl.instance.HaveNotice("进入失败！");
+                                return;
+                            }
+                            PlayDisable.instance.playIsDisable = true;
+                            SoundHelper.EnterToilet();
+                            this.gameObject.SetActive(false);
+                        }
+                    }
+
+                    //追逐模式躲藏地
+                    else if (GameObject.Find("CenterCtrl").GetComponent<CenterCtrl_human>() != null)
+                    {
+                        if (wc.IsT)
+                        {
+                            PlayDisable.instance.playIsDisable = true;
+                            Debug.Log("设置玩家已经禁用状态...");
+                            SoundHelper.EnterToilet();
+                            this.gameObject.SetActive(false);
+                        }
+
+                        if (wc.IsP)
+                        {
+                            if (Random.Range(1, 50) != 23)
+                            {
+                                CenterCtrl_human.instance.HaveNotice("进入失败！");
+                                return;
+                            }
+                            PlayDisable.instance.playIsDisable = true;
+                            SoundHelper.EnterToilet();
+                            this.gameObject.SetActive(false);
+                        }
                     }
                     
-                    if (wc.IsP)
-                    {
-                        if (Random.Range(1, 50) != 23)
-                        {
-                            CenterCtrl.instance.HaveNotice("进入失败！");
-                            return;
-                        }
-                        PlayDisable.instance.playIsDisable = true;
-                        SoundHelper.EnterToilet();
-                        this.gameObject.SetActive(false);
-                    }
-                }
 
+
+                }
                 //交互在此添加
                 //****** = Get;
             }

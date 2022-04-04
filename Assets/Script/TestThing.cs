@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class TestThing : MonoBehaviour
 {
-    int va;
+    /*int va;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
         {
-            CenterCtrl.instance.SetTree(-100);
+            CenterCtrl.instance.Bonie();
         }
-    }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            CenterCtrl.instance.SetTree(-99999);
+            CenterCtrl.instance.GamePlayTimeS = -99999;
+        }
+    }*/
 }

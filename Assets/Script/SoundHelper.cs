@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundHelper : MonoBehaviour
 {
+    public static SoundHelper instance { get; private set; }
+
+    public AudioSource backgroudPlay;
+
     static AudioSource ads;
     //====Àÿ≤ƒ====
     static AudioClip warnHL;
-    static AudioClip normalbg;
     static AudioClip tpSound;
     static AudioClip enterToilet;
     static AudioClip dead;
@@ -15,9 +19,12 @@ public class SoundHelper : MonoBehaviour
     static AudioClip ok;
     static AudioClip get;
     static AudioClip destory;
+    static AudioClip compele;
+    static AudioClip click;
 
-    void Start()
+    void Awake()
     {
+        instance = this;
         ads = GetComponent<AudioSource>();
         warnHL = Resources.Load<AudioClip>("Hcome");
         tpSound = Resources.Load<AudioClip>("Teleport");
@@ -27,6 +34,23 @@ public class SoundHelper : MonoBehaviour
         ok = Resources.Load<AudioClip>("OK");
         get = Resources.Load<AudioClip>("Get");
         destory = Resources.Load<AudioClip>("Dest");
+        compele = Resources.Load<AudioClip>("Done");
+        click = Resources.Load<AudioClip>("Click");
+    }
+    void Start()
+    {
+        ads.volume = AllSceneSetting.instance.EffectSound;
+    }
+    void Update()
+    {
+        ads.volume = AllSceneSetting.instance.EffectSound;
+        if(backgroudPlay != null) backgroudPlay.volume = AllSceneSetting.instance.BackGSound;
+    }
+    //====…Ë÷√±≥æ∞“Ù¿÷÷µ====
+    public void SetSliderValue()
+    {
+        GameObject.Find("BackGSlider").GetComponent<Slider>().value = AllSceneSetting.instance.BackGSound;
+        GameObject.Find("EffectSlider").GetComponent<Slider>().value = AllSceneSetting.instance.EffectSound;
     }
 
     public static void hCome()
@@ -60,5 +84,13 @@ public class SoundHelper : MonoBehaviour
     public static void DestroyTree()
     {
         ads.PlayOneShot(destory); //∆∆ªµ ˜
+    }
+    public static void CompeleGame()
+    {
+        ads.PlayOneShot(compele); //ÕÍ≥…”Œœ∑
+    }
+    public static void Click()
+    {
+        ads.PlayOneShot(click);
     }
 }

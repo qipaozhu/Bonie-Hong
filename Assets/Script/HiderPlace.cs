@@ -8,31 +8,32 @@ public class HiderPlace : MonoBehaviour
     bool isParkBike = false;
     public bool IsT { get { return isToilet; } }
     public bool IsP { get { return isParkBike; } }
+    bool isHumanMode;
 
     void Start()
     {
         if (this.gameObject.tag == "Toitet") isToilet = true;
         else if (this.gameObject.tag == "Parkbike") isParkBike = true;
         else Debug.LogError("HiderPlace没有Tag！");
+        CenterCtrl_human ch = GetComponent<CenterCtrl_human>();
+        if (ch != null) isHumanMode = true;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Update()
     {
         if (isToilet) InWC();
-        //else if (isParkBike) InParkLot();
+        else if (isParkBike) InParkLot();
     }
 
     void InWC()
     {
-
+        if(isHumanMode) if (EnderSky_human.instance.WillOver) Destroy(gameObject);
+        else if (EnderSky.instance.WillOver) Destroy(gameObject);
     }
 
     void InParkLot() 
     {
-        if (Input.GetButtonDown("jiaohu"))
-        {
-            SoundHelper.Beep();
-            CenterCtrl.instance.HaveNotice("没有实装该功能，请关注进展");
-        }
+        if(isHumanMode) if(EnderSky_human.instance.WillOver) Destroy(gameObject);
+        else if(EnderSky.instance.WillOver)Destroy(gameObject);
     }
 }

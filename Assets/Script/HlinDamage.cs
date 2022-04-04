@@ -26,7 +26,6 @@ public class HlinDamage : MonoBehaviour
         {
             HlinControl.Found();
             HlinControl.instance.timeOver = false;
-            Debug.Log("Hey");
         }
         PlayerCollect.instance.ChangeHealth(damageHealth);
     }

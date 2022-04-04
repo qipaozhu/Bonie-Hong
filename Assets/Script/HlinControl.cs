@@ -44,6 +44,7 @@ public class HlinControl : MonoBehaviour
     {
 		ai.destination = target.position;
 
+        //====声音====
         if (!timeOver) time = time - Time.deltaTime;
         if (time < 0)
         {
@@ -51,12 +52,14 @@ public class HlinControl : MonoBehaviour
             time = 3;
         }
 
+        //如果没有找到玩家和冷却到了
         if (target == hlNotFound && timeOver)
         {
             ads.PlayOneShot(notFound);
             timeOver = false;
         }
 
+        //如果出没
         if (CenterCtrl.instance.isHCM)
         {
             bool isDisalbe = PlayDisable.instance.playIsDisable;

@@ -2,18 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuControl : MonoBehaviour
 {
     public GameObject pauseMenu;
-    public static MenuControl instance { get; private set; }
 
+    public static MenuControl instance { get; private set; }
     public int prop1AddHealth;
+    public GameObject load;
+    public Text version;
 
     public void StartHCM() //开始出没
     {
-        SceneManager.LoadScene(1);
-    }
+        load.SetActive(true);
+        Invoke("LoadScene1", 1);
+    }void LoadScene1() { SceneManager.LoadScene(1); }
+
+    public void StartHCMHumanMode() //开始出没
+    {
+        load.SetActive(true);
+        Invoke("LoadScene2", 1);
+    }void LoadScene2() { SceneManager.LoadScene(2); }
+
     public void QuitHCM() //结束出没
     {
         Application.Quit();
@@ -21,7 +32,7 @@ public class MenuControl : MonoBehaviour
     public void BackMenu() //返回开始菜单
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
     public void Pause() //暂停
     {
@@ -48,11 +59,18 @@ public class MenuControl : MonoBehaviour
     {
         Application.OpenURL("https://docs.qq.com/doc/DZGF0SVRoUWR3Rkpx");
     }
+    
 
     void Start()
     {
         instance = this;
-        SceneManager.UnloadSceneAsync(1);
+        if(SceneManager.sceneCount == 2) SceneManager.UnloadSceneAsync(1);
+        if (System.IO.File.Exists("isReg.txt") && SceneManager.GetActiveScene() == SceneManager.GetSceneAt(0))
+        {
+            Debug.Log("没有注册");
+            GameObject.Find("Login").SetActive(true);
+        }
+        version.text = Application.version;
     }
 
     //用遗照
