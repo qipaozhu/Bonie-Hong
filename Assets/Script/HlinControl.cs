@@ -7,9 +7,12 @@ public class HlinControl : MonoBehaviour
 {
 	public static HlinControl instance { get; private set; }
 
-	public Transform player;
-	public Transform hlHome;
-    public Transform hlNotFound;
+	Transform player;
+	Transform hlHome;
+    Transform hlNotFound;
+
+    float health = 50;
+    public TextMesh hlHealthText;
 
     float time = 6;
     public bool timeOver = false;
@@ -35,6 +38,10 @@ public class HlinControl : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.Find("Player").transform;
+        hlHome = GameObject.Find("LHhome").transform;
+        hlNotFound = GameObject.Find("CenterCtrl").transform;
+
         target = player.transform;
         ai.maxSpeed = speed;
     }
@@ -42,7 +49,14 @@ public class HlinControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		ai.destination = target.position;
+        if (health <= 0) //当没血时
+        {
+            SoundHelper.July5();
+            Destroy(gameObject);
+        }
+        hlHealthText.text = health.ToString();
+
+		ai.destination = target.position; //设置AI目标为设置的目标位置
 
         //====声音====
         if (!timeOver) time = time - Time.deltaTime;
@@ -79,20 +93,7 @@ public class HlinControl : MonoBehaviour
         if (v == 2) target = hlHome;
         if (v == 3) target = hlNotFound;
     }
-
-    //出没设置
-    /*public void CMControl(int what)
-    {
-        if(what == 1)
-        {
-            SetTarget(1);
-        }
-        if(what == 2)
-        {
-            SetTarget(2);
-        }
-    }*/
-
+    
     public static void Found() 
     {
         ads.PlayOneShot(isFound);
@@ -107,9 +108,14 @@ public class HlinControl : MonoBehaviour
     }
     void ResetSpeed() { ai.maxSpeed = speed; }
 
+    //血量
+    public void DamageHL(float healthy)
+    {
+        health -= healthy;
+    }
 
     /// <summary>
-    /// =================AI部分=============================
+    /// ====================AI部分==========================
     /// </summary>
     void OnEnable()
 	{

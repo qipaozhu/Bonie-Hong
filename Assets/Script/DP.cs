@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DP : MonoBehaviour
 {
-    public void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;

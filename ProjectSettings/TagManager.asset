@@ -8,6 +8,7 @@ TagManager:
   - Toitet
   - Parkbike
   - Light
+  - Enemy
   layers:
   - Default
   - TransparentFX

@@ -10,6 +10,8 @@ public class HlinControl_human : MonoBehaviour
 	public Transform player;
 	public Transform hlHome;
 
+    float health;
+
     float time = 6;
     public bool timeOver = false;
 
@@ -47,6 +49,10 @@ public class HlinControl_human : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
 		ai.destination = target.position;
 
         //====ÉùÒô====
@@ -90,6 +96,11 @@ public class HlinControl_human : MonoBehaviour
     }
     void ResetSpeed() { ai.maxSpeed = speed; }
 
+    //ÑªÁ¿
+    public void DamageHL(float healthy)
+    {
+        health -= healthy;
+    }
 
     /// <summary>
     /// =================AI²¿·Ö=============================

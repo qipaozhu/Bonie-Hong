@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class Setting : MonoBehaviour
 {
+    public static Setting instance { get; private set; }
+    Animator ani;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            ani = GetComponent<Animator>();
+        }
+        else Destroy(gameObject);
+    }
+
+    public void ShowSetting()
+    {
+         if(ani.GetBool("isShow")) ani.SetBool("isShow", false);
+         else ani.SetBool("isShow", true);
+    }
 
     //====背景音乐设置====
-    public void SetBGSoundValue(float value)
+    public void SetBGSoundValue(float sound)
     {
-        AllSceneSetting.instance.BackGSound = value;
+        AllSceneSetting.instance.BackGSound = sound;
     }
     //====效果音乐设置====
-    public void SetEFSoundValue(float value)
+    public void SetEFSoundValue(float sound)
     {
-        AllSceneSetting.instance.EffectSound = value;
+        AllSceneSetting.instance.EffectSound = sound;
     }
 
-    //====难度设置
-    public void Easy()
-    {
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-        AllSceneSetting.instance.TreeCount = Random.Range(15, 20);
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-    }
-    public void Normal()
-    {
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-        AllSceneSetting.instance.TreeCount = Random.Range(45, 50);
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-    }
-    public void Hard()
-    {
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-        AllSceneSetting.instance.TreeCount = Random.Range(70, 75);
-        Debug.Log(AllSceneSetting.instance.TreeCount);
-    }
 }

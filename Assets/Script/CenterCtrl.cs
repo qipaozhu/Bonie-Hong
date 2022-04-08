@@ -38,6 +38,9 @@ public class CenterCtrl : MonoBehaviour
     //====是否出没====
     bool IsHCM = false;
     public bool isHCM { get { return IsHCM; } }
+    //====林泓是否在====
+    bool isHlLife;
+    public bool isHllife { get => isHlLife; set => isHlLife = value; }
     //====树木====
     public int lastTreeConut { get { return TreeCount; } }
     int TreeCount;
@@ -46,6 +49,8 @@ public class CenterCtrl : MonoBehaviour
     //====道具====
     public Text prop1;
     public Text prop2;
+    public Text prop3;
+    public Text prop4;
     //====技能条====
     public GameObject propBar;
     public GameObject[] treeSpawn;
@@ -67,6 +72,7 @@ public class CenterCtrl : MonoBehaviour
         nextHBonie = Random.Range(60, maxTimeToCM);
         fullHBonie = nextHBonie;
         IsHCM = false;
+        hlText.text = "等待复活";
     }
 
     void Update()
@@ -78,7 +84,7 @@ public class CenterCtrl : MonoBehaviour
             if (c_teleCold <= 0) c_isTeleColdDone = true; //小于0设置true
         }
 
-        if (nextHBonie > 0 && !EnderSky.instance.WillOver) // 如果下一次出没大于0且树没砍完，时间
+        if (nextHBonie > 0 && !EnderSky.instance.WillOver && isHlLife) // 如果下一次出没大于0且树没砍完且泓在，时间减
         {
             hlBar.fillAmount = nextHBonie / fullHBonie; //boss条
             hlText.text = Mathf.Floor(nextHBonie).ToString();
@@ -104,18 +110,14 @@ public class CenterCtrl : MonoBehaviour
         if (Input.GetButtonDown("Prop")) //技能栏
         {
             SoundHelper.Click();
-
             if (propBar.GetComponent<Animator>().GetBool("isShow")) propBar.GetComponent<Animator>().SetBool("isShow", false);
             else propBar.GetComponent<Animator>().SetBool("isShow", true);
-
-            //if (propBar.activeSelf) propBar.SetActive(false);
-            //else propBar.SetActive(true);
         }
         if (Input.GetButtonDown("Minimap")) //地图显示
         {
             SoundHelper.Click();
-            if (miniMap.activeSelf) miniMap.SetActive(false);
-            else miniMap.SetActive(true);
+            if(miniMap.GetComponent<Animator>().GetBool("isShow")) miniMap.GetComponent<Animator>().SetBool("isShow", false);
+            else miniMap.GetComponent<Animator>().SetBool("isShow", true);
         }
         
 
@@ -124,7 +126,9 @@ public class CenterCtrl : MonoBehaviour
         //====设置道具一数量文字====
         prop1.text = PlayerCollect.instance.Prop1Conut.ToString();
         prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
-    }
+        prop3.text = PlayerCollect.instance.Prop3Conut.ToString();
+        prop4.text = PlayerCollect.instance.Prop4Conut.ToString();
+}
 
     void Start()
     {
@@ -137,7 +141,7 @@ public class CenterCtrl : MonoBehaviour
         SpawnTree(AllSceneSetting.instance.TreeCount);
     }
 
-    void TiShi(Sprite icon,string text)
+    public void TiShi(Sprite icon,string text)
     {
         tishiIcon.sprite = icon;
         tishiText.text = text;

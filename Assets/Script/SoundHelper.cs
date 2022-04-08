@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class SoundHelper : MonoBehaviour
 {
-    public static SoundHelper instance { get; private set; }
+    //public static SoundHelper instance { get; private set; }
 
     public AudioSource backgroudPlay;
 
@@ -21,13 +21,17 @@ public class SoundHelper : MonoBehaviour
     static AudioClip destory;
     static AudioClip compele;
     static AudioClip click;
+    static AudioClip djrsay;
+    static AudioClip fire;
+    static AudioClip july5;
+    static AudioClip tpnewsound;
 
     void Awake()
     {
-        instance = this;
         ads = GetComponent<AudioSource>();
         warnHL = Resources.Load<AudioClip>("Hcome");
         tpSound = Resources.Load<AudioClip>("Teleport");
+        tpnewsound = Resources.Load<AudioClip>("Teleport_new");
         enterToilet = Resources.Load<AudioClip>("EnterToilet");
         dead = Resources.Load<AudioClip>("Dead");
         beep = Resources.Load<AudioClip>("Beep");
@@ -36,21 +40,15 @@ public class SoundHelper : MonoBehaviour
         destory = Resources.Load<AudioClip>("Dest");
         compele = Resources.Load<AudioClip>("Done");
         click = Resources.Load<AudioClip>("Click");
+        djrsay = Resources.Load<AudioClip>("JRsay");
+        fire = Resources.Load<AudioClip>("Fire");
+        july5 = Resources.Load<AudioClip>("July5");
     }
-    void Start()
-    {
-        ads.volume = AllSceneSetting.instance.EffectSound;
-    }
+
     void Update()
     {
         ads.volume = AllSceneSetting.instance.EffectSound;
-        if(backgroudPlay != null) backgroudPlay.volume = AllSceneSetting.instance.BackGSound;
-    }
-    //====…Ë÷√±≥æ∞“Ù¿÷÷µ====
-    public void SetSliderValue()
-    {
-        GameObject.Find("BackGSlider").GetComponent<Slider>().value = AllSceneSetting.instance.BackGSound;
-        GameObject.Find("EffectSlider").GetComponent<Slider>().value = AllSceneSetting.instance.EffectSound;
+        if (backgroudPlay != null) { backgroudPlay.volume = AllSceneSetting.instance.BackGSound; }
     }
 
     public static void hCome()
@@ -59,7 +57,7 @@ public class SoundHelper : MonoBehaviour
     }
     public static void telePort()
     {
-        ads.PlayOneShot(tpSound); //¥´ÀÕ…˘
+        ads.PlayOneShot(tpnewsound); //¥´ÀÕ…˘
     }
     public static void EnterToilet()
     {
@@ -92,5 +90,17 @@ public class SoundHelper : MonoBehaviour
     public static void Click()
     {
         ads.PlayOneShot(click);
+    }
+    public static void DjrSay()
+    {
+        ads.PlayOneShot(djrsay);
+    }
+    public static void Fire()
+    {
+        ads.PlayOneShot(fire);
+    }
+    public static void July5()
+    {
+        ads.PlayOneShot(july5);
     }
 }

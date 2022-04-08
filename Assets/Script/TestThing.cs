@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestThing : MonoBehaviour
 {
-    /*int va;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))
@@ -16,5 +15,5 @@ public class TestThing : MonoBehaviour
             CenterCtrl.instance.SetTree(-99999);
             CenterCtrl.instance.GamePlayTimeS = -99999;
         }
-    }*/
+    }
 }

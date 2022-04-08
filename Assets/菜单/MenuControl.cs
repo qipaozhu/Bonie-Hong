@@ -64,12 +64,7 @@ public class MenuControl : MonoBehaviour
     void Start()
     {
         instance = this;
-        if(SceneManager.sceneCount == 2) SceneManager.UnloadSceneAsync(1);
-        if (System.IO.File.Exists("isReg.txt") && SceneManager.GetActiveScene() == SceneManager.GetSceneAt(0))
-        {
-            Debug.Log("没有注册");
-            GameObject.Find("Login").SetActive(true);
-        }
+
         version.text = Application.version;
     }
 
@@ -89,7 +84,7 @@ public class MenuControl : MonoBehaviour
     //用个人信息
     public void UseIF()
     {
-        if (!CenterCtrl.instance.isHCM)
+        if (!CenterCtrl.instance.isHCM || PlayerCollect.instance.Prop2Conut <= 0)
         {
             SoundHelper.Beep();
             return;
@@ -97,5 +92,31 @@ public class MenuControl : MonoBehaviour
         SoundHelper.OK();
         HlinControl.instance.SetSpeed();
         PlayerCollect.instance.SetProp(2, -1);
+    }
+
+    //用秋键
+    public void UseDJR()
+    {
+        if(PlayerCollect.instance.Prop3Conut <= 0)
+        {
+            SoundHelper.Beep();
+            return;
+        }
+        SoundHelper.DjrSay();
+        SoundHelper.OK();
+        PlayerCollect.instance.AddSpeed();
+        PlayerCollect.instance.SetProp(3, -1);
+    }
+    //用表情
+    public void UseEmoji()
+    {
+        if (PlayerCollect.instance.Prop4Conut <= 0)
+        {
+            SoundHelper.Beep();
+            return;
+        }
+        SoundHelper.OK();
+        PlayerCollect.instance.OpenGun();
+        PlayerCollect.instance.SetProp(4, -1);
     }
 }

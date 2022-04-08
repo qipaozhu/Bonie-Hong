@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MenuControl_human : MonoBehaviour
 {
@@ -53,8 +52,27 @@ public class MenuControl_human : MonoBehaviour
     //用个人信息
     public void UseIF()
     {
+        if (PlayerCollect.instance.Prop2Conut <= 0)
+        {
+            SoundHelper.Beep();
+            return;
+        }
         SoundHelper.OK();
         HlinControl_human.instance.SetSpeed();
         PlayerCollect.instance.SetProp(2, -1);
+    }
+
+    //用秋键
+    public void UseDJR()
+    {
+        if (PlayerCollect.instance.Prop3Conut <= 0)
+        {
+            SoundHelper.Beep();
+            return;
+        }
+        SoundHelper.DjrSay();
+        SoundHelper.OK();
+        PlayerCollect.instance.AddSpeed();
+        PlayerCollect.instance.SetProp(3, -1);
     }
 }

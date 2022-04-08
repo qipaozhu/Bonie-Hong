@@ -7,8 +7,13 @@ public class PlayerCollect : MonoBehaviour
     public static PlayerCollect instance { get; private set; }
     Rigidbody2D ridy;
     Animator anim;
+
+    float agospeed;
     public float speed;
+    public float waitGunCloseTime;
+    //====游戏对象
     public GameObject deadMenu;
+    public GameObject gun;
     //====设置血量====
     private int maxHealth = 20;
     private int nowHealth = 20;
@@ -24,8 +29,12 @@ public class PlayerCollect : MonoBehaviour
     //====道具数量====
     int prop1Conut = 0; //道具1：遗照
     public int Prop1Conut { get { return prop1Conut; } }
-    int prop2Conut = 0; //道具1：遗照
+    int prop2Conut = 0; //道具2：个人信息
     public int Prop2Conut { get { return prop2Conut; } }
+    int prop3Conut = 0; //道具3：秋键
+    public int Prop3Conut { get { return prop3Conut; } }
+    int prop4Conut = 0; //道具4：我是lbr
+    public int Prop4Conut { get { return prop4Conut; } }
 
     //======函数=======
     void Start()
@@ -34,6 +43,7 @@ public class PlayerCollect : MonoBehaviour
         nowHealth = maxHealth;
         ridy = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        agospeed = speed;
     }
 
     void Awake()
@@ -79,8 +89,6 @@ public class PlayerCollect : MonoBehaviour
             if (timeNoDamage <= 0) noDamage = false;
             else if (timeNoDamage > 0) timeNoDamage = timeNoDamage - Time.deltaTime;
         }
-        //====道具====
-        Prop();
 
     }
 
@@ -157,9 +165,6 @@ public class PlayerCollect : MonoBehaviour
                             this.gameObject.SetActive(false);
                         }
                     }
-                    
-
-
                 }
                 //交互在此添加
                 //****** = Get;
@@ -177,11 +182,28 @@ public class PlayerCollect : MonoBehaviour
         {
             prop2Conut += howMuch;
         }
+        if (whatToAdd == 3)
+        {
+            prop3Conut += howMuch;
+        }
+        if (whatToAdd == 4)
+        {
+            prop4Conut += howMuch;
+        }
     }
 
-    void Prop()
+    public void AddSpeed()
     {
-        
-    }
+        speed += 8;
+        Invoke("ResetSpeed", 1);
+    } void ResetSpeed() { speed = agospeed; }
 
+    public void OpenGun()
+    {
+        gun.SetActive(true);
+        Invoke("ResetGun", waitGunCloseTime);
+    } void ResetGun()
+    {
+        gun.SetActive(false);
+    }
 }

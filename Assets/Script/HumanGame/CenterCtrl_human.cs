@@ -37,6 +37,7 @@ public class CenterCtrl_human : MonoBehaviour
     //====道具====
     public Text prop1;
     public Text prop2;
+    public Text prop3;
     //====技能条====
     public GameObject propBar;
     public GameObject[] treeSpawn;
@@ -47,6 +48,10 @@ public class CenterCtrl_human : MonoBehaviour
     float c_teleCold;
     bool c_isTeleColdDone = true;
     public bool isTeleDone { get { return c_isTeleColdDone; } }
+
+    //====林泓是否在====
+    bool isHlLife;
+    public bool isHllife { get => isHlLife; set => isHlLife = value; }
 
     bool aShotOver = false;
 
@@ -77,18 +82,27 @@ public class CenterCtrl_human : MonoBehaviour
         }
         if (Input.GetButtonDown("Prop")) //技能栏
         {
-            if (propBar.activeSelf) propBar.SetActive(false);
-            else propBar.SetActive(true);
+            SoundHelper.Click();
+            if (propBar.GetComponent<Animator>().GetBool("isShow")) propBar.GetComponent<Animator>().SetBool("isShow", false);
+            else propBar.GetComponent<Animator>().SetBool("isShow", true);
+
+            //if (propBar.activeSelf) propBar.SetActive(false);
+            //else propBar.SetActive(true);
         }
         if (Input.GetButtonDown("Minimap")) //地图显示
         {
-            if (miniMap.activeSelf) miniMap.SetActive(false);
-            else miniMap.SetActive(true);
+            SoundHelper.Click();
+            if (miniMap.GetComponent<Animator>().GetBool("isShow")) miniMap.GetComponent<Animator>().SetBool("isShow", false);
+            else miniMap.GetComponent<Animator>().SetBool("isShow", true);
+
+            //if (miniMap.activeSelf) miniMap.SetActive(false);
+            //else miniMap.SetActive(true);
         }
 
         //====设置道具一数量文字====
         prop1.text = PlayerCollect.instance.Prop1Conut.ToString();
         prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
+        prop3.text = PlayerCollect.instance.Prop3Conut.ToString();
     }
 
     void Start()
