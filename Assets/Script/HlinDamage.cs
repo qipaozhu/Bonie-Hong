@@ -16,17 +16,19 @@ public class HlinDamage : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        //Debug.Log("ÓÐÊµÌå");
-        if (pc == null)
+        if (pc != null)
         {
-            //Debug.Log("¿Õ");
-            return;
+            if (HlinControl.instance.timeOver == true)
+            {
+                HlinControl.Found();
+                HlinControl.instance.timeOver = false;
+            }
+            pc.ChangeHealth(damageHealth);
         }
-        if (HlinControl.instance.timeOver == true)
+        CHAIR ch = other.gameObject.GetComponent<CHAIR>();
+        if(ch != null)
         {
-            HlinControl.Found();
-            HlinControl.instance.timeOver = false;
+            ch.ChangeHealth(damageHealth);
         }
-        PlayerCollect.instance.ChangeHealth(damageHealth);
     }
 }

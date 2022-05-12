@@ -10,7 +10,7 @@ public class HlinControl : MonoBehaviour
 	Transform player;
 	Transform hlHome;
     Transform hlNotFound;
-
+    GameObject[] firstToFind;
     float health = 50;
     public TextMesh hlHealthText;
 
@@ -38,15 +38,15 @@ public class HlinControl : MonoBehaviour
 
     void Start()
     {
-        player = GameObject.Find("Player").transform;
-        hlHome = GameObject.Find("LHhome").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        hlHome = GameObject.FindGameObjectWithTag("LHome").transform;
+        
         hlNotFound = GameObject.Find("CenterCtrl").transform;
 
-        target = player.transform;
+        target = player;
         ai.maxSpeed = speed;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (health <= 0) //当没血时
@@ -56,7 +56,7 @@ public class HlinControl : MonoBehaviour
         }
         hlHealthText.text = health.ToString();
 
-		ai.destination = target.position; //设置AI目标为设置的目标位置
+        if (target != null) { ai.destination = target.position; }//设置AI目标为设置的目标位置
 
         //====声音====
         if (!timeOver) time = time - Time.deltaTime;
@@ -72,7 +72,7 @@ public class HlinControl : MonoBehaviour
             ads.PlayOneShot(notFound);
             timeOver = false;
         }
-
+        firstToFind = GameObject.FindGameObjectsWithTag("HFirstFind");
         //如果出没
         if (CenterCtrl.instance.isHCM)
         {
@@ -89,10 +89,21 @@ public class HlinControl : MonoBehaviour
     //设置目标
     void SetTarget(int v)
     {
-        if (v == 1) target = player;
+        if (v == 1)
+        {
+            if (firstToFind.Length >= 1)
+            {
+                target = firstToFind[0].transform;
+            }
+            else
+            {
+                target = player;
+            }
+        }
         if (v == 2) target = hlHome;
         if (v == 3) target = hlNotFound;
     }
+    
     
     public static void Found() 
     {

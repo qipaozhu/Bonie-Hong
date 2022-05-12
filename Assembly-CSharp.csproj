@@ -62,7 +62,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\Script\PlayDisable.cs" />
     <Compile Include="Assets\Script\Setting.cs" />
-    <Compile Include="Assets\Script\ANTUMN.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\ANTUMN.cs" />
     <Compile Include="Assets\Script\PropSpawnPoint.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -70,11 +70,13 @@
     <Compile Include="Assets\Script\AllSceneSetting.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Script\DiffcultSet.cs" />
+    <Compile Include="Assets\Script\PropsAndItems.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Script\PlayerCollect.cs" />
     <Compile Include="Assets\Script\CenterCtrl.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Script\LHspawn.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Script\SoundHelper.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
@@ -104,14 +106,16 @@
     <Compile Include="Assets\Script\HiderPlace.cs" />
     <Compile Include="Assets\菜单\Login.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Script\Gun.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Script\HumanGame\LightControl_human.cs" />
     <Compile Include="Assets\Script\AllSceneUICtrl.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\IMLBR.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Script\Teleport.cs" />
-    <Compile Include="Assets\Script\INFORMATION.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\INFORMATION.cs" />
     <Compile Include="Assets\Script\HumanGame\EnderSky_human.cs" />
     <Compile Include="Assets\Script\HlinDamage.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -120,13 +124,13 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Script\HumanGame\HlinDamage_human.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Script\DP.cs" />
+    <Compile Include="Assets\Script\Bullet.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\DP.cs" />
     <Compile Include="Assets\Script\AllSceneSee.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
-    <Compile Include="Assets\Script\IMLBR.cs" />
-    <Compile Include="Assets\Script\LHspawn.cs" />
-    <Compile Include="Assets\Script\Gun.cs" />
-    <Compile Include="Assets\Script\Bullet.cs" />
+    <Compile Include="Assets\Script\UIManager.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\CHAIR.cs" />
+    <Compile Include="Assets\Script\ItemAndProp\BIGWATER.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -728,6 +732,18 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>D:\Program Files\2020.3.26f1c1\Editor\Data\NetStandard\compat\2.0.0\shims\netfx\System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.2D.Animation.Editor.csproj">
@@ -770,10 +786,6 @@
       <Project>{9509CB3E-8EB4-7068-1B68-516A6AD5146A}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.2D.Tilemap.Editor.csproj">
-      <Project>{32B0CD16-F041-F557-1D2F-479414AE50FA}</Project>
-      <Name>Unity.2D.Tilemap.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
       <Project>{41D30FCB-4103-B633-ED1A-99A64CFC4932}</Project>
       <Name>Unity.Timeline</Name>
@@ -794,10 +806,6 @@
       <Project>{5AC3ECE8-7517-B0DE-C94A-3BA4CD8CF40C}</Project>
       <Name>Unity.2D.IK.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.2D.Sprite.Editor.csproj">
-      <Project>{570DB1C8-B8C3-FA19-D1A6-16DB725E8192}</Project>
-      <Name>Unity.2D.Sprite.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.2D.Psdimporter.Editor.csproj">
       <Project>{021E3B2F-1C90-7071-5695-B19CA20070B8}</Project>
       <Name>Unity.2D.Psdimporter.Editor</Name>
@@ -810,10 +818,6 @@
       <Project>{81D2DF3E-9735-188F-9CE4-8F224F5B4C0A}</Project>
       <Name>Unity.RenderPipelines.Core.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{EA2D3A75-CBCE-3CD0-B096-54BF8A4322CD}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
       <Project>{D2E0C181-A7A4-8174-491A-1CE56DF6602F}</Project>
       <Name>Unity.PlasticSCM.Editor</Name>
@@ -825,10 +829,6 @@
     <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.csproj">
       <Project>{0CA49B24-8E61-688C-2B2E-0747DF752386}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{33F56A02-4A18-32E2-423D-03C402A0BD49}</Project>
-      <Name>UnityEngine.UI</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.InternalAPIEditorBridge.001.csproj">
       <Project>{34D4B8C2-3AE7-1897-6916-ED1DD018BB15}</Project>

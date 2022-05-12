@@ -9,6 +9,8 @@ TagManager:
   - Parkbike
   - Light
   - Enemy
+  - LHome
+  - HFirstFind
   layers:
   - Default
   - TransparentFX

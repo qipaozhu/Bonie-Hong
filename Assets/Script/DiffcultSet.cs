@@ -10,7 +10,7 @@ public class DiffcultSet : MonoBehaviour
     {
         Debug.Log(AllSceneSetting.instance.TreeCount);
         AllSceneSetting.instance.TreeCount = Random.Range(15, 20);
-        AllSceneSetting.instance.lhNextSpawn = 80;
+        AllSceneSetting.instance.lhNextSpawn = 60;
         AllSceneSetting.instance.PropSpawnCold = 120;
         Debug.Log(AllSceneSetting.instance.TreeCount);
     }
@@ -18,7 +18,7 @@ public class DiffcultSet : MonoBehaviour
     {
         Debug.Log(AllSceneSetting.instance.TreeCount);
         AllSceneSetting.instance.TreeCount = Random.Range(45, 50);
-        AllSceneSetting.instance.lhNextSpawn = 50;
+        AllSceneSetting.instance.lhNextSpawn = 45;
         AllSceneSetting.instance.PropSpawnCold = 160;
         Debug.Log(AllSceneSetting.instance.TreeCount);
     }

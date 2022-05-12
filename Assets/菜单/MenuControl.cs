@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,7 +9,6 @@ public class MenuControl : MonoBehaviour
     public GameObject pauseMenu;
 
     public static MenuControl instance { get; private set; }
-    public int prop1AddHealth;
     public GameObject load;
     public Text version;
 
@@ -65,58 +64,22 @@ public class MenuControl : MonoBehaviour
     {
         instance = this;
 
-        version.text = Application.version;
-    }
+        //验证是否为正版
+        GameObject peVer = GameObject.Find("PeopleFromNotice");
 
-    //用遗照
-    public void UseDP()
-    {
-        if (PlayerCollect.instance.Prop1Conut < 1 || PlayerCollect.instance.PnowHealth >= PlayerCollect.instance.PmaxHealth)
-        {
-            SoundHelper.Beep();
-            return;
+        string[] people = Environment.GetCommandLineArgs();
+        //1.长度不是3
+        if (people.Length != 3) 
+        { 
+            Application.Quit(1); 
         }
-        SoundHelper.OK();
-        PlayerCollect.instance.ChangeHealth(prop1AddHealth);
-        PlayerCollect.instance.SetProp(1, -1);
-    }
-
-    //用个人信息
-    public void UseIF()
-    {
-        if (!CenterCtrl.instance.isHCM || PlayerCollect.instance.Prop2Conut <= 0)
+        //2.第三位不是密码
+        if (people[2] != "VhOA91uIA") { Application.Quit(1); }
+        //是的话
+        if(peVer != null)
         {
-            SoundHelper.Beep();
-            return;
+            peVer.GetComponent<Text>().text = people[1] + "版";
         }
-        SoundHelper.OK();
-        HlinControl.instance.SetSpeed();
-        PlayerCollect.instance.SetProp(2, -1);
-    }
-
-    //用秋键
-    public void UseDJR()
-    {
-        if(PlayerCollect.instance.Prop3Conut <= 0)
-        {
-            SoundHelper.Beep();
-            return;
-        }
-        SoundHelper.DjrSay();
-        SoundHelper.OK();
-        PlayerCollect.instance.AddSpeed();
-        PlayerCollect.instance.SetProp(3, -1);
-    }
-    //用表情
-    public void UseEmoji()
-    {
-        if (PlayerCollect.instance.Prop4Conut <= 0)
-        {
-            SoundHelper.Beep();
-            return;
-        }
-        SoundHelper.OK();
-        PlayerCollect.instance.OpenGun();
-        PlayerCollect.instance.SetProp(4, -1);
+        if (version != null) { version.text = Application.version; }
     }
 }

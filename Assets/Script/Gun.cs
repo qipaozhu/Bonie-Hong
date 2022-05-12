@@ -21,6 +21,7 @@ public class Gun : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
+            if (PlayDisable.instance.playIsDisable) { return; }
             SoundHelper.Fire();
             Debug.Log("°´ÏÂ");
             Instantiate(bullet, muzzle.position, Quaternion.Euler(transform.eulerAngles));

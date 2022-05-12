@@ -36,10 +36,12 @@ public class PlayerCollect : MonoBehaviour
     int prop4Conut = 0; //道具4：我是lbr
     public int Prop4Conut { get { return prop4Conut; } }
 
+    int item1Conut = 0; //物品1：大厕头水
+    public int Item1Conut { get { return item1Conut; } }
+
     //======函数=======
     void Start()
     {
-        Debug.Log("Start函数");
         nowHealth = maxHealth;
         ridy = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -58,7 +60,7 @@ public class PlayerCollect : MonoBehaviour
         {
             SoundHelper.Dead();
             deadMenu.SetActive(true);
-            Destroy(this);
+            Destroy(gameObject);
         }
         //====看的方向和移动方向====
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -189,6 +191,10 @@ public class PlayerCollect : MonoBehaviour
         if (whatToAdd == 4)
         {
             prop4Conut += howMuch;
+        }
+        if (whatToAdd == 21)
+        {
+            item1Conut += howMuch;
         }
     }
 

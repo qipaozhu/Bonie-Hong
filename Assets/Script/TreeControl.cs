@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class TreeControl : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class TreeControl : MonoBehaviour
     int treeHealth;
     public int maxTreeHealth;
     public ParticleSystem treePart;
+    Animator anm;
 
     //====时间冷却====
     float time;
@@ -16,7 +18,7 @@ public class TreeControl : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        if (pc != null || time <= 0)
+        if (pc != null && time <= 0 && treeHealth > -100)
         {
             //如果是玩家且冷却到了
             SoundHelper.DestroyTree();
@@ -24,23 +26,23 @@ public class TreeControl : MonoBehaviour
             time = maxTime;
             treePart.Play();
 
-            if (treeHealth <= 0)
+            if (treeHealth <= 0 && treeHealth > -100)
             {
+                treeHealth = -999;
                 if (GameObject.Find("CenterCtrl").GetComponent<CenterCtrl_human>() != null)
                 {
                     CenterCtrl_human.instance.SetTree(-1);
                 }//如果是猎杀模式
-                else CenterCtrl.instance.SetTree(-1);
-
+                else
+                {
+                    CenterCtrl.instance.SetTree(-1);
+                }
+                anm.SetBool("isDest", true);
                 SoundHelper.Get();
-                Destroy(this.gameObject);
+                
+                Destroy(gameObject,5);
             }
         }
-        /*TreeSpawn ts = other.gameObject.GetComponent<TreeSpawn>();
-        if(ts != null)
-        {
-            Destroy(other.gameObject);
-        }*/
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -58,5 +60,15 @@ public class TreeControl : MonoBehaviour
         time = maxTime;
         treeHealth = maxTreeHealth;
         treePart.Stop();
+        anm = GetComponent<Animator>();
+    }
+
+    private void OnMouseEnter()
+    {
+        GetComponentInChildren<Light2D>().intensity = 2;
+    }
+    private void OnMouseExit()
+    {
+        GetComponentInChildren<Light2D>().intensity = 0;
     }
 }

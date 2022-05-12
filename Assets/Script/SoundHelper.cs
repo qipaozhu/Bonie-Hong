@@ -7,8 +7,6 @@ public class SoundHelper : MonoBehaviour
 {
     //public static SoundHelper instance { get; private set; }
 
-    public AudioSource backgroudPlay;
-
     static AudioSource ads;
     //====ËØ²Ä====
     static AudioClip warnHL;
@@ -24,14 +22,12 @@ public class SoundHelper : MonoBehaviour
     static AudioClip djrsay;
     static AudioClip fire;
     static AudioClip july5;
-    static AudioClip tpnewsound;
 
     void Awake()
     {
         ads = GetComponent<AudioSource>();
         warnHL = Resources.Load<AudioClip>("Hcome");
-        tpSound = Resources.Load<AudioClip>("Teleport");
-        tpnewsound = Resources.Load<AudioClip>("Teleport_new");
+        tpSound = Resources.Load<AudioClip>("Teleport_new");
         enterToilet = Resources.Load<AudioClip>("EnterToilet");
         dead = Resources.Load<AudioClip>("Dead");
         beep = Resources.Load<AudioClip>("Beep");
@@ -48,7 +44,6 @@ public class SoundHelper : MonoBehaviour
     void Update()
     {
         ads.volume = AllSceneSetting.instance.EffectSound;
-        if (backgroudPlay != null) { backgroudPlay.volume = AllSceneSetting.instance.BackGSound; }
     }
 
     public static void hCome()
@@ -57,7 +52,7 @@ public class SoundHelper : MonoBehaviour
     }
     public static void telePort()
     {
-        ads.PlayOneShot(tpnewsound); //´«ËÍÉù
+        ads.PlayOneShot(tpSound); //´«ËÍÉù
     }
     public static void EnterToilet()
     {

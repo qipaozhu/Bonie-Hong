@@ -12,29 +12,31 @@ public class CenterCtrl : MonoBehaviour
     public float GamePlayTime { get { return playTime; } }
     public float GamePlayTimeS { get => playTime; set => playTime = value; }
     //====出没时间====
+    [Header("下一次出没")]
     public int maxTimeToCM;
     float nextHBonie;
     float fullHBonie;
-    
+
     //====条====
-    //下一次出没条
+    [Header("下一次出没条")]
     public Image hlBar;
     public Text hlText;
-    public bool ooooooooooooooooooooooooooo;
+    [Header("树的条")]
     public Image treeFullBar; //树条
-
+    [Header("提示条")]
     public GameObject notice; //弹出提示
     public Text noticeText; //弹出提示
-    public bool ooooooooooooooooooooooo;
+    [Header("游戏提示")]
     //小芝士(游戏提示）
     public Image tishiIcon;
     public Text tishiText;
 
+    [Header("提示的图标")]
     public Sprite endtishiIcon;
     public Sprite deffIcon;
+    public Sprite wcIcon;
 
-    public GameObject miniMap;
-    public bool oooooooooo0oooooooooooooo;
+
     //====是否出没====
     bool IsHCM = false;
     public bool isHCM { get { return IsHCM; } }
@@ -45,18 +47,15 @@ public class CenterCtrl : MonoBehaviour
     public int lastTreeConut { get { return TreeCount; } }
     int TreeCount;
     int maxTreeCount;
-    public bool oooooooooooooooooooooooooo;
-    //====道具====
-    public Text prop1;
-    public Text prop2;
-    public Text prop3;
-    public Text prop4;
-    //====技能条====
-    public GameObject propBar;
+
+    
+
+    [Header("树生成点")]
     public GameObject[] treeSpawn;
 
-    public bool oooooooooooooooooooooooo;
     //====传送门冷却====
+    [Header("传送门冷却")]
+    [Min(0)]
     public float maxTeleCold;
     float c_teleCold;
     bool c_isTeleColdDone = true;
@@ -84,7 +83,7 @@ public class CenterCtrl : MonoBehaviour
             if (c_teleCold <= 0) c_isTeleColdDone = true; //小于0设置true
         }
 
-        if (nextHBonie > 0 && !EnderSky.instance.WillOver && isHlLife) // 如果下一次出没大于0且树没砍完且泓在，时间减
+        if (nextHBonie > 0 && !EnderSky.instance.WillOver && isHlLife) // 如果下一次出没大于0 和 树没砍完 和 泓在，时间减
         {
             hlBar.fillAmount = nextHBonie / fullHBonie; //boss条
             hlText.text = Mathf.Floor(nextHBonie).ToString();
@@ -107,27 +106,9 @@ public class CenterCtrl : MonoBehaviour
         {
             MenuControl.instance.Pause();
         }
-        if (Input.GetButtonDown("Prop")) //技能栏
-        {
-            SoundHelper.Click();
-            if (propBar.GetComponent<Animator>().GetBool("isShow")) propBar.GetComponent<Animator>().SetBool("isShow", false);
-            else propBar.GetComponent<Animator>().SetBool("isShow", true);
-        }
-        if (Input.GetButtonDown("Minimap")) //地图显示
-        {
-            SoundHelper.Click();
-            if(miniMap.GetComponent<Animator>().GetBool("isShow")) miniMap.GetComponent<Animator>().SetBool("isShow", false);
-            else miniMap.GetComponent<Animator>().SetBool("isShow", true);
-        }
-        
-
         if ( nextHBonie <= 0 && !isHCM)// 如果下一次出没小于0，HCM函数
             HCMfuncion();
-        //====设置道具一数量文字====
-        prop1.text = PlayerCollect.instance.Prop1Conut.ToString();
-        prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
-        prop3.text = PlayerCollect.instance.Prop3Conut.ToString();
-        prop4.text = PlayerCollect.instance.Prop4Conut.ToString();
+
 }
 
     void Start()
@@ -198,7 +179,7 @@ public class CenterCtrl : MonoBehaviour
         IsHCM = true;
         //====功能====
         SoundHelper.hCome();
-        tishiIcon.sprite = deffIcon;
+        tishiIcon.sprite = wcIcon;
         tishiText.text = "找到厕所/停车棚（红色正方形）并“E”躲进去";
         //===========
         Invoke("ResetHL", Random.Range(30,100));

@@ -8,6 +8,7 @@ public class Teleport : MonoBehaviour
     public ParticleSystem telePart;
     bool isPlayerIn;
     Transform player;
+    public GameObject howTeleNotice;
 
     void Update()
     {
@@ -45,6 +46,7 @@ public class Teleport : MonoBehaviour
         if (pc == null) return;
         telePart.Stop();
         isPlayerIn = false;
+        howTeleNotice.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -53,6 +55,7 @@ public class Teleport : MonoBehaviour
         if (pc == null) return;
         telePart.Play();
         isPlayerIn = true;
+        howTeleNotice.SetActive(true);
     }
 
     private void Start()
