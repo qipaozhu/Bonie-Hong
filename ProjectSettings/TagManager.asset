@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Laer
+  - Toitet
+  - Parkbike
+  - Light
+  - Enemy
+  - LHome
+  - HFirstFind
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Map
+  - Water
+  - UI
+  - CanNPC
+  - EnemyHL
+  - Decorate
+  - MiniMapDisplay
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: People
+    uniqueID: 1054376085
+    locked: 0
+  - name: CantSee
+    uniqueID: 3896004227
+    locked: 0
