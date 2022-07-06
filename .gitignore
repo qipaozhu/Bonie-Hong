@@ -8,3 +8,4 @@ Assets/AssetStoreTools*
 .vs/
 
 *.csproj
+user.keystore
