@@ -28,6 +28,7 @@ public class TreeControl : MonoBehaviour
 
             Destroy(GetComponent<Rigidbody2D>());
             Destroy(GetComponent<BoxCollider2D>());
+            Destroy(transform.GetChild(0).gameObject);
 
             Destroy(gameObject, 60);
         }

@@ -9,16 +9,13 @@ public class MenuControl : MonoBehaviour
     public GameObject pauseMenu;
 
     public static MenuControl instance { get; private set; }
-    public GameObject load;
     public Text version;
 
     public void StartHCM() //开始出没
     {
-        load.SetActive(true);
-        Invoke("LoadScene1", 1);
+        Toast.instance.InfoBox("正在加载中...");
+        SceneManager.LoadSceneAsync(1);
     }
-    void LoadScene1() { SceneManager.LoadScene(1); }
-
     public void QuitHCM() //结束出没
     {
         Application.Quit();

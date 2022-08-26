@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Login : MonoBehaviour
 {
     public static Login instance { get; private set; }
-    
+
     private void Start()
     {
         //验证是否为正版

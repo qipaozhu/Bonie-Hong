@@ -79,12 +79,13 @@ public class CenterCtrl : MonoBehaviour
         playTime += Time.deltaTime; //游戏时间加
 
         //试用的时间
+#if !UNITY_EDITOR
         if(playTime > 180 && !AllSceneSetting.instance.isRealPlayer)
         {
             Toast.instance.InfoBox("试用结束！");
             MenuControl.instance.BackMenu();
         }
-
+#endif
         if (!c_isTeleColdDone) //如果传送门没有冷却好
         {
             c_teleCold -= Time.deltaTime;
@@ -165,7 +166,9 @@ public class CenterCtrl : MonoBehaviour
 
     void OnESC()
     {
-        MenuControl.instance.Pause();
+        if (Time.timeScale != 0)
+        { MenuControl.instance.Pause(); }
+        else { MenuControl.instance.NotPause(); }
     }
 
     public void DelSpawn()

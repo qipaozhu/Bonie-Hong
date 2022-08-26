@@ -10,6 +10,8 @@ public class Gun : MonoBehaviour
 
     [Header("枪口")]
     public Transform muzzle;
+    [Header("枪口冷却时间")]
+    public int waitTimeNoGun;
 
     Vector3 mousePos;
     Vector2 gunDireon;
@@ -19,6 +21,7 @@ public class Gun : MonoBehaviour
         StopCoroutine(GunAngle());
     }
 
+    //计算枪的角度
     IEnumerator GunAngle()
     {
         while (true)
@@ -31,6 +34,16 @@ public class Gun : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 特定时间内没收枪
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator GunDisable()
+    {
+        yield return new WaitForSeconds(waitTimeNoGun);
+        gameObject.SetActive(false);
+    }
+
     private void OnDisable()
     {
         StopCoroutine(GunAngle());
@@ -38,14 +51,16 @@ public class Gun : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(GunAngle());
+        StartCoroutine(GunDisable());
     }
 
+    //当发射时
     void OnFire()
     {
         if (PlayDisable.instance.playIsDisable) { return; }
         SoundHelper.Fire();
         Debug.Log("按下");
         Instantiate(bullet, muzzle.position, Quaternion.Euler(transform.eulerAngles));
-        PlayerCollect.instance.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gunDireon * -4000, mousePos);
+        PlayerCollect.instance.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gunDireon * -4000, mousePos); //后坐力
     }
 }

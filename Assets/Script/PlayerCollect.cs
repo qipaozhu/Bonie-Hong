@@ -14,7 +14,6 @@ public class PlayerCollect : MonoBehaviour
     
     [Min(0)]
     public float speed;
-    public float waitGunCloseTime;
     //====游戏对象
     public GameObject deadMenu;
     public GameObject gun;
@@ -31,6 +30,8 @@ public class PlayerCollect : MonoBehaviour
     //====默认朝向====
     private Vector2 lookWhere = new Vector2(1, 0);
     Vector2 moveWhere;
+
+
     //====道具数量====
     int prop1Conut = 0; //道具1：遗照
     public int Prop1Conut { get => prop1Conut; set => prop1Conut = value; }
@@ -40,7 +41,7 @@ public class PlayerCollect : MonoBehaviour
     public int Prop3Conut { get => prop3Conut; set => prop3Conut = value; }
     int prop4Conut = 0; //道具4：我是lbr
     public int Prop4Conut { get => prop4Conut; set => prop4Conut = value; }
-
+    //====物品数量====
     int item1Conut = 0; //物品1：大厕头水
     public int Item1Conut { get => item1Conut; set => item1Conut = value; }
     int item2Conut = 0; //物品2：回收站
@@ -93,7 +94,6 @@ public class PlayerCollect : MonoBehaviour
             if (timeNoDamage <= 0) noDamage = false;
             else if (timeNoDamage > 0) timeNoDamage = timeNoDamage - Time.deltaTime;
         }
-
     }
 
     //血量变化
@@ -109,6 +109,8 @@ public class PlayerCollect : MonoBehaviour
         nowHealth = Mathf.Clamp(changeHealth + nowHealth, 0, maxHealth);
         Debug.Log(nowHealth + "和" + maxHealth);
     }
+
+    //WASD移动
     void OnMove(InputValue value)
     {
         Debug.Log("WASD按下");
@@ -138,6 +140,7 @@ public class PlayerCollect : MonoBehaviour
                     wc.TryToHideParkLot();
                 }
             }
+            //Add here
         }
     }
     
@@ -179,9 +182,5 @@ public class PlayerCollect : MonoBehaviour
     public void OpenGun()
     {
         gun.SetActive(true);
-        Invoke("ResetGun", waitGunCloseTime);
-    } void ResetGun()
-    {
-        gun.SetActive(false);
-    }
+    } 
 }

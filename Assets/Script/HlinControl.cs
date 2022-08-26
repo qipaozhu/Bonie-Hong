@@ -132,7 +132,8 @@ public class HlinControl : MonoBehaviour
         {
             if (HlinSkill.main.isTuiSkill)
             {
-                target = player;
+                if (PlayDisable.instance.playIsDisable) { target = hlHome;}
+                else { target = player; }
             }
             else
             {

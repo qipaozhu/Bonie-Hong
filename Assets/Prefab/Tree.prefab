@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4539036012646645621}
   - component: {fileID: 4539036012646645620}
   - component: {fileID: 6535774099019535274}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 7824362540935727670}
   - component: {fileID: 731932151492056814}
   m_Layer: 9
-  m_Name: Circle
+  m_Name: Circle(NotToChangeIndex)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

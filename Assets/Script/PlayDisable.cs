@@ -9,6 +9,7 @@ public class PlayDisable : MonoBehaviour
 
     [HideInInspector]
     public bool playIsDisable;
+    public bool isPlayerDeath { get; set; } = false;
     public GameObject player;
     public GameObject exitWCNotice;
 

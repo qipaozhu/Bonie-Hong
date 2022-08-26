@@ -15,7 +15,8 @@ public class Bullet : MonoBehaviour
     {
         rid = GetComponent<Rigidbody2D>();
         rid.velocity = transform.right * speed;
-        startPos = transform.position;
+        startPos = transform.position; 
+        Destroy(gameObject,10);
     }
 
     void Update()
@@ -29,9 +30,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.GetComponent<HlinControl>() != null)
+        HlinControl hc = other.gameObject.GetComponent<HlinControl>();
+        if (hc != null)
         {
-            other.gameObject.GetComponent<HlinControl>().DamageHL(4);
+            hc.DamageHL(4);
             Destroy(gameObject);
         }
     }
