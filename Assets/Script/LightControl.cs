@@ -10,13 +10,9 @@ public class LightControl : MonoBehaviour
 
     void Update()
     {
-        if (CenterCtrl.instance.isHCM && !EnderSky.instance.WillOver)
+        if (CenterCtrl.instance.isHCM)
         {
             golgalLight.intensity = golgalIntensity;
-        }
-        else if(EnderSky.instance.WillOver)
-        {
-            golgalLight.intensity = .7f;
         }
         else
         {

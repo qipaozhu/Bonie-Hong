@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3029825535932485693}
   - component: {fileID: 9118767590104574687}
   - component: {fileID: 5803288973409587874}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BigToiletWater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.03541851, y: -0.17000842}

@@ -9,6 +9,10 @@ public class INFORMATION : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         Debug.Log("玩家进入道具");
+        ClickThis();
+    }
+    public void ClickThis()
+    {
         PlayerCollect.instance.Prop2Conut++;
         SoundHelper.Get();
         Destroy(this.gameObject);

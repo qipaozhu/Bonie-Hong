@@ -40,6 +40,28 @@ public class TreeControl : MonoBehaviour
         treePart.Stop();
     }
 
+    public void DestroyTreeByClick()
+    {
+        SoundHelper.DestroyTree();
+        treeHealth--;
+        treePart.Play();
+
+        if (treeHealth <= 0 && treeHealth > -100)
+        {
+            treeHealth = -999;
+            CenterCtrl.instance.SetTree(-1);
+            anm.SetBool("isDest", true);
+            SoundHelper.Get();
+
+            Destroy(GetComponent<Rigidbody2D>());
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(transform.GetChild(0).gameObject);
+
+            Destroy(gameObject, 60);
+        }
+
+    }
+
     private void Start()
     {
         treeHealth = maxTreeHealth;

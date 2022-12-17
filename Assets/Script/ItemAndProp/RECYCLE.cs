@@ -9,6 +9,10 @@ public class RECYCLE : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         Debug.Log("玩家进入道具");
+        ClickThis();
+    }
+    public void ClickThis()
+    {
         PlayerCollect.instance.Item2Conut++; // 增加道具数量
         SoundHelper.Get();
         Destroy(gameObject);

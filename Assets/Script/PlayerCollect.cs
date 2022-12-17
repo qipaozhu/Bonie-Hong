@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerCollect : MonoBehaviour
@@ -30,6 +33,10 @@ public class PlayerCollect : MonoBehaviour
     //====默认朝向====
     private Vector2 lookWhere = new Vector2(1, 0);
     Vector2 moveWhere;
+    //====攻击冷却====
+    float attackcold;
+    int maxattackcold = 1;
+
 
 
     //====道具数量====
@@ -54,6 +61,7 @@ public class PlayerCollect : MonoBehaviour
         ridy = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         agospeed = speed;
+        attackcold = maxattackcold;
     }
 
     void Awake()
@@ -93,6 +101,39 @@ public class PlayerCollect : MonoBehaviour
         {
             if (timeNoDamage <= 0) noDamage = false;
             else if (timeNoDamage > 0) timeNoDamage = timeNoDamage - Time.deltaTime;
+        }
+
+        //====攻击冷却====
+        if(attackcold > 0)
+        {
+            attackcold -= Time.deltaTime;  
+        }
+        
+        //====点击r砍树====
+        if (Keyboard.current.rKey.wasPressedThisFrame && attackcold <= 0 && !EventSystem.current.IsPointerOverGameObject()) 
+        {
+            RaycastHit2D hit = Physics2D.Raycast(ridy.position, lookWhere, 3f, LayerMask.GetMask("CanNPC"));
+            anim.SetTrigger("Attack");
+            if (hit.collider != null)
+            {
+                TreeControl tc;
+                if(tc = hit.collider.GetComponent<TreeControl>())
+                {
+                    tc.DestroyTreeByClick();
+                }
+            }
+            attackcold = maxattackcold;
+        }
+
+        //====点击地图上的东西获取道具====
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            RaycastHit2D hitinfo = Physics2D.Raycast(
+                Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero, 0.4f, LayerMask.GetMask("Decorate"));
+            if (hitinfo.collider != null)
+            {
+                hitinfo.transform.gameObject.SendMessage("ClickThis");
+            }
         }
     }
 
@@ -143,35 +184,35 @@ public class PlayerCollect : MonoBehaviour
             //Add here
         }
     }
-    
-    public void SetProp(int whatToAdd,int howMuch)
-    {
-        Debug.LogWarning("弃用的函数！");
-        if(whatToAdd == 1)
-        {
-            prop1Conut += howMuch;
-        }
-        if(whatToAdd == 2)
-        {
-            prop2Conut += howMuch;
-        }
-        if (whatToAdd == 3)
-        {
-            prop3Conut += howMuch;
-        }
-        if (whatToAdd == 4)
-        {
-            prop4Conut += howMuch;
-        }
-        if (whatToAdd == 21)
-        {
-            item1Conut += howMuch;
-        }
-        if (whatToAdd == 22)
-        {
-            item1Conut += howMuch;
-        }
-    }
+
+    //public void SetProp(int whatToAdd, int howMuch)
+    //{
+    //    Debug.LogWarning("弃用的函数！");
+    //    if(whatToAdd == 1)
+    //    {
+    //        prop1Conut += howMuch;
+    //    }
+    //    if(whatToAdd == 2)
+    //    {
+    //        prop2Conut += howMuch;
+    //    }
+    //    if (whatToAdd == 3)
+    //    {
+    //        prop3Conut += howMuch;
+    //    }
+    //    if (whatToAdd == 4)
+    //    {
+    //        prop4Conut += howMuch;
+    //    }
+    //    if (whatToAdd == 21)
+    //    {
+    //        item1Conut += howMuch;
+    //    }
+    //    if (whatToAdd == 22)
+    //    {
+    //        item1Conut += howMuch;
+    //    }
+    //}
 
     public void AddSpeed()
     {

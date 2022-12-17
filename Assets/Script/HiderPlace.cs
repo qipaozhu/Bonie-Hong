@@ -31,10 +31,6 @@ public class HiderPlace : MonoBehaviour
         while (true)
         {
             yield return null;
-            if (EnderSky.instance.WillOver)
-            {
-                Destroy(gameObject);
-            }
         }
     }
 

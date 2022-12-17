@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7503795421628758283}
   - component: {fileID: 7503795421628758277}
   - component: {fileID: 7503795421628758276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Prop2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.07417965, y: 0.007417679}

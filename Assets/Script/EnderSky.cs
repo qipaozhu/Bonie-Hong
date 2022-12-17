@@ -7,7 +7,7 @@ public class EnderSky : MonoBehaviour
 {
     public static EnderSky instance { get; private set; }
     bool e_treeIsNone = false;
-    public bool WillOver { get { return e_treeIsNone; } }
+    private bool WillOver { get { return e_treeIsNone; } }
 
     public GameObject endNotice; //Ω· ¯±Í”Ô
     public Text playTimeNotice;
@@ -19,10 +19,7 @@ public class EnderSky : MonoBehaviour
 
     public void TreeOver()
     {
-        if (e_treeIsNone) return;
-        e_treeIsNone = true;
-        SoundHelper.hCome();
-        CenterCtrl.instance.TiShiEnd();
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

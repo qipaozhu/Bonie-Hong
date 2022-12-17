@@ -5,18 +5,19 @@ using UnityEngine.UI;
 
 public class UIhealthyManaer : MonoBehaviour
 {
-    public Image healthBar;
+    Slider healthFill;
     public TMPro.TextMeshProUGUI healthText;
     public static UIhealthyManaer instance { get; private set; }
     void Start()
     {
         instance = this;
+        healthFill = GetComponent<Slider>();
     }
 
     //====¸üÐÂÑªÌõ====
     public void UpdateHealthBar(int maxH,int nowH)
     {
         healthText.text = nowH + "/" + maxH;
-        healthBar.fillAmount = (float)nowH / (float)maxH;
+        healthFill.value = (float)nowH / (float)maxH;
     }
 }

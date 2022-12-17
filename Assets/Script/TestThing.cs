@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TestThing : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Keyboard.current.nKey.isPressed)
         {
-            EnderSky.instance.TreeOver();
+            
         }
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    Toast.instance.InfoBox("≤‚ ‘≤‚ ‘≤‚ ‘≤‚ ‘");
-        //}
     }
 }

@@ -250,7 +250,6 @@ GameObject:
   - component: {fileID: 7091794171458380600}
   - component: {fileID: 7091794171458380601}
   - component: {fileID: 7091794171458380602}
-  - component: {fileID: 6357339172291955046}
   m_Layer: 6
   m_Name: ParkBike
   m_TagString: Parkbike
@@ -387,21 +386,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.1015625, y: 1.774723}
   m_EdgeRadius: 0
---- !u!114 &6357339172291955046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7091794171458380603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c892bab47debf274aab4084501e978a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info:
-  - "\u4E00\u4E2A\u8EB2\u6CD3\u5927\u7684\u5730\u65B9\uFF0C\u6709\u65F6\u5019\u624D\u53EF\u4EE5\u8FDB\u53BB"
-  - "E\u8FDB\u5165"
 --- !u!1 &7624980095408648082
 GameObject:
   m_ObjectHideFlags: 0

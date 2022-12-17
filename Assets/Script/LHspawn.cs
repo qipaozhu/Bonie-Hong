@@ -11,9 +11,6 @@ public class LHspawn : MonoBehaviour
     public GameObject hl;
     public TextMesh nextHSpawnNotice;
 
-    //结束时再生成几只
-    bool isSpawnOK = false;
-
     void Start()
     {
         maxSpwanTime = AllSceneSetting.instance.lhNextSpawn;
@@ -23,15 +20,6 @@ public class LHspawn : MonoBehaviour
     void FixedUpdate()
     {
         CenterCtrl.instance.isHllife = isHlIn;
-
-        if (EnderSky.instance.WillOver && !isSpawnOK)
-        {
-            Instantiate(hl);
-            Instantiate(hl);
-            Instantiate(hl);
-
-            isSpawnOK = true;
-        }
 
         if (FindObjectOfType<HlinControl>() == null)
         {

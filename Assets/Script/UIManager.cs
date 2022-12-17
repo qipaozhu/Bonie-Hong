@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class UIManager : MonoBehaviour
 
     [Header("√‘ƒ„µÿÕº")]
     public GameObject miniMap;
+
+    [Header("–≈œ¢ø®")]
+    public GameObject infocard;
+    public Slider healthBar;
+    public Text title;
+    public Text description;
 
     private void Start()
     {
@@ -53,5 +60,29 @@ public class UIManager : MonoBehaviour
         prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
         prop3.text = PlayerCollect.instance.Prop3Conut.ToString();
         prop4.text = PlayerCollect.instance.Prop4Conut.ToString();
+    }
+    IEnumerator InfoCard()
+    {
+        while (true)
+        {
+            RaycastHit2D hit = Physics2D.Raycast
+                (Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero, .5f);
+            if(hit.collider != null)
+            {
+                InfoCard text = hit.collider.GetComponent<InfoCard>();
+                if(text != null)
+                {
+                    infocard.SetActive(true);
+                    infocard.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) + new Vector2(2,0);
+                    title.text = text.objectName;
+                    description.text = text.description;
+                }
+                else
+                {
+                    infocard.SetActive(false);
+                }
+            }
+            yield return null;
+        }
     }
 }

@@ -25,11 +25,6 @@ public class AllSceneSetting : MonoBehaviour
     float v_lhNextSpawn = 10;
     public float lhNextSpawn { get => v_lhNextSpawn; set => v_lhNextSpawn = value; }
 
-    //====Õý°æÑéÖ¤====
-    [SerializeField]
-    bool v_isPlayer = false;
-    public bool isRealPlayer { get => v_isPlayer; set => v_isPlayer = value; }
-
     private void Awake()
     {
         if(instance == null)
