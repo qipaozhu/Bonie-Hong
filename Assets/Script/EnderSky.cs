@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class EnderSky : MonoBehaviour
 {
     public static EnderSky instance { get; private set; }
-    bool e_treeIsNone = false;
-    private bool WillOver { get { return e_treeIsNone; } }
 
     public GameObject endNotice; //Ω· ¯±Í”Ô
     public Text playTimeNotice;
@@ -25,7 +23,7 @@ public class EnderSky : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        if (pc == null || !e_treeIsNone) return;
+        if (pc == null || CenterCtrl.instance.lastTreeConut > 0) return;
 
         SoundHelper.CompeleGame();
         End();

@@ -6,14 +6,11 @@ public class Teleport : MonoBehaviour
 {
     public Transform whereToGo;
     public ParticleSystem telePart;
-    bool isPlayerIn;
     Transform player;
     public GameObject howTeleNotice;
  
-    void OnJiaohu()
+    public void TeleprotTo()
     {
-        if (!isPlayerIn) return;
-
         if (!CenterCtrl.instance.isTeleDone)
         {
             Toast.instance.HaveNotice("传送门太热了！");
@@ -29,7 +26,6 @@ public class Teleport : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         telePart.Stop();
-        isPlayerIn = false;
         howTeleNotice.SetActive(false);
     }
 
@@ -38,7 +34,6 @@ public class Teleport : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         telePart.Play();
-        isPlayerIn = true;
         howTeleNotice.SetActive(true);
     }
 
@@ -46,6 +41,5 @@ public class Teleport : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         telePart.Stop();
-        isPlayerIn = false;
     }
 }

@@ -5,33 +5,30 @@ using UnityEngine.InputSystem;
 
 public class HiderPlace : MonoBehaviour
 {
+    //是否是停车棚或厕所
     bool isToilet = false;
     bool isParkBike = false;
     public bool IsT { get { return isToilet; } }
     public bool IsP { get { return isParkBike; } }
 
-    public GameObject enterNotice;
-    
-    public Color defColor;
-    Color nowColor;
-    
+    //躲藏地血量
+    int health;
+    public int maxToiletHeath;
+    public int maxParklotHeath;
 
     void Start()
     {
-        if (gameObject.tag == "Toitet") isToilet = true;
-        else if (gameObject.tag == "Parkbike") isParkBike = true;
-        else Debug.LogError("HiderPlace没有Tag！");
-
-        nowColor = GetComponent<Renderer>().material.color;
-        StartCoroutine(TestEnd());
-    }
-
-    IEnumerator TestEnd()
-    {
-        while (true)
+        if (gameObject.tag == "Toitet")
         {
-            yield return null;
+            isToilet = true;
+            health = maxToiletHeath;
         }
+        else if (gameObject.tag == "Parkbike")
+        {
+            isParkBike = true;
+            health = maxParklotHeath;
+        }
+        else Debug.LogError("HiderPlace没有Tag！");
     }
 
     /// <summary>
@@ -45,7 +42,7 @@ public class HiderPlace : MonoBehaviour
         PlayerCollect.instance.gameObject.SetActive(false);
     }
 
-    public void TryToHideParkLot() 
+    public void TryToHideParkLot()
     {
         if (Random.Range(1, 10) != 2)
         {
@@ -57,17 +54,17 @@ public class HiderPlace : MonoBehaviour
         PlayerCollect.instance.gameObject.SetActive(false);
     }
 
-    void OnMouseEnter()
+    /// <summary>
+    /// 扣除躲藏地血量
+    /// </summary>
+    /// <param name="damage">正数的，扣多少</param>
+    public void DamageHider(int damage)
     {
-        Debug.Log("鼠标进入");
-        GetComponent<SpriteRenderer>().color = defColor;
-        enterNotice.SetActive(true);
-    }
-
-    void OnMouseExit()
-    {
-        Debug.Log("鼠标退出");
-        GetComponent<SpriteRenderer>().color = nowColor;
-        enterNotice.SetActive(false);
+        if(damage < 0) { Debug.LogWarning("错的参数！");return; }
+        health -= damage;
+        if(health <=0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

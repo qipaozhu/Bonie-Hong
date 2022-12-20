@@ -39,6 +39,10 @@ public class HlinControl : MonoBehaviour
 	IAstarAI ai;
     ParticleSystem ps;
 
+    //技能是否释放
+    bool s_isTuiSkill = false;
+    public bool isTuiSkill { get => s_isTuiSkill; set => s_isTuiSkill = value; }
+
     private void Awake()
     {
         if (instance == null)
@@ -73,20 +77,16 @@ public class HlinControl : MonoBehaviour
             SoundHelper.July5();
             Destroy(gameObject);
         }
+
         //血量的
-        string hetext = "";
-        while (hetext.Length - 1 < health)
-        {
-            hetext += "*";
-        }
-        hlHealthText.text = hetext;
+
 
         if (target != null) { ai.destination = target.position; }//设置AI目标为设置的目标位置
 
         //====设置声音大小====
         ads.volume = AllSceneSetting.instance.EffectSound;
 
-        //冷却
+        //音效冷却功能
         if (!timeOver) time = time - Time.deltaTime;
         if (time < 0)
         {
@@ -100,39 +100,37 @@ public class HlinControl : MonoBehaviour
             ads.PlayOneShot(notFound);
             timeOver = false;
         }
+
+        //先配置泓第一个找的
         firstToFind = GameObject.FindGameObjectsWithTag("HFirstFind");
-        //如果出没
-        if (CenterCtrl.instance.isHCM)
-        {
-            bool isDisalbe = PlayDisable.instance.playIsDisable;
-            if (isDisalbe) SetTarget(3);
-            if (!isDisalbe) SetTarget(1);
-        }
-        else
-        {
-            SetTarget(2);
-        }
+
+        //目标自动选择
+        FindTarget();
     }
 
     //设置目标
-    void SetTarget(int v)
+    void FindTarget()
     {
-        if (v == 1)
+        if (CenterCtrl.instance.isHCM)
         {
-            if (firstToFind.Length >= 1)
-            {
-                target = firstToFind[0].transform;
-            }
+            bool isDisalbe = PlayDisable.instance.playIsDisable; //检测玩家隐藏状态
+            if (isDisalbe) { target = hlNotFound; }
             else
             {
-                target = player;
+                if (firstToFind.Length >= 1){ target = firstToFind[0].transform; }//如果有泓第一个先找的
+                else{ target = player; }
             }
-        }
-        if (v == 2)
+        }//如果出没了
+
+        else if (CenterCtrl.instance.isBossWar)
         {
-            if (HlinSkill.main.isTuiSkill)
+
+        }
+        else
+        {
+            if (s_isTuiSkill)
             {
-                if (PlayDisable.instance.playIsDisable) { target = hlHome;}
+                if (PlayDisable.instance.playIsDisable) { target = hlHome; }
                 else { target = player; }
             }
             else
@@ -140,9 +138,7 @@ public class HlinControl : MonoBehaviour
                 target = hlHome;
             }
         }
-        if (v == 3) target = hlNotFound;
     }
-    
     
     public static void Found() 
     {
@@ -158,14 +154,14 @@ public class HlinControl : MonoBehaviour
     }
     void ResetSpeed() { ai.maxSpeed = speed; }
 
-    //血量
+    //伤害血量
     public void DamageHL(float healthy)
     {
         health -= healthy;
         hlTexture.GetComponent<SpriteRenderer>().color = Color.red;
         ps.Play();
         ads.PlayOneShot(hurt);
-        Invoke("ResetColor", .2f);
+        Invoke("ResetColor", .1f);
     }
     void ResetColor()
     {

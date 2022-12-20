@@ -51,6 +51,8 @@ public class Gun : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(GunAngle());
+
+        StopCoroutine(GunDisable());
         StartCoroutine(GunDisable());
     }
 
@@ -59,7 +61,6 @@ public class Gun : MonoBehaviour
     {
         if (PlayDisable.instance.playIsDisable) { return; }
         SoundHelper.Fire();
-        Debug.Log("按下");
         Instantiate(bullet, muzzle.position, Quaternion.Euler(transform.eulerAngles));
         PlayerCollect.instance.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gunDireon * -4000, mousePos); //后坐力
     }

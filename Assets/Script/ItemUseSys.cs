@@ -35,7 +35,6 @@ public class ItemUseSys : MonoBehaviour
     //用遗照
     public void UseDP()
     {
-        //PlayDisable.instance.playIsDisable
         if (PlayerCollect.instance.Prop1Conut < 1 || PlayerCollect.instance.PnowHealth >= PlayerCollect.instance.PmaxHealth)
         {
             SoundHelper.Beep();
@@ -97,8 +96,8 @@ public class ItemUseSys : MonoBehaviour
         else
         {
             SoundHelper.Beep();
-            return;
         }
+        itemBar.SetBool("isShow", false);
     }
 
     //回收站物品
@@ -113,8 +112,8 @@ public class ItemUseSys : MonoBehaviour
         else
         {
             SoundHelper.Beep();
-            return;
         }
+        itemBar.SetBool("isShow", false);
     }
 
     private void Start()

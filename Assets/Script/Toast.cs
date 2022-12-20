@@ -23,12 +23,17 @@ public class Toast : MonoBehaviour
     //提示功能
     public void HaveNotice(string whatToNotice)
     {
+        StopCoroutine(EndNotice());
         notice.SetActive(true);
         noticeText.text = whatToNotice;
         SoundHelper.Beep();
-        Invoke("EndNotice", 5);
+        StartCoroutine(EndNotice());
     }
-    void EndNotice() { notice.SetActive(false); }
+    IEnumerator EndNotice()
+    {
+        yield return new WaitForSeconds(5);
+        notice.SetActive(false);
+    }
 
     //HL释放技能提示
     public void NoticeSkill(string skillname)

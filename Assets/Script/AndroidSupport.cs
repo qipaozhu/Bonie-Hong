@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AndroidSupport : MonoBehaviour
 {
@@ -8,20 +9,19 @@ public class AndroidSupport : MonoBehaviour
     {
         PlayerCollect.instance.Echicken();
     }
-    public void AndroidItem()
-    {
-        UIManager.main.OnItem();
-    }
-    public void AndroidProp()
-    {
-        UIManager.main.OnProp();
-    }
     public void AndroidMap()
     {
         UIManager.main.OnMap();
     }
-    public void AndroidPause()
+
+    private void Start()
     {
-        MenuControl.instance.Pause();
+#if UNITY_EDITOR
+        return;
+#endif
+        if(Application.platform != RuntimePlatform.Android)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

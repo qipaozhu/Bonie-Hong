@@ -81,8 +81,11 @@ public class CenterCtrl : MonoBehaviour
         }
 
         //当树<=0时
-        if (TreeCount <= 0) EnderSky.instance.TreeOver();
-
+        if (TreeCount <= 0)
+        {
+            EnderSky.instance.TreeOver();
+            IsHCM = false;
+        }
         //树的显示
         float fillamount = (float)TreeCount / (float)maxTreeCount;
         treeFullBar.fillAmount = 1 - fillamount;

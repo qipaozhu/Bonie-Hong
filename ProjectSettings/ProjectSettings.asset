@@ -43,7 +43,7 @@ PlayerSettings:
   - logo: {fileID: 10404, guid: 0000000000000000e000000000000000, type: 0}
     duration: 2
   - logo: {fileID: 21300000, guid: 7bf8a12657844f84db0edc802874c3da, type: 3}
-    duration: 4
+    duration: 5
   - logo: {fileID: 21300000, guid: 83a74b98eb356474c97f664496799edf, type: 3}
     duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
@@ -151,7 +151,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 2.0.1
+  bundleVersion: 2.1
   preloadedAssets:
   - {fileID: 11400000, guid: 038d1716cb0fadf4f9e4507eb37cbfd0, type: 2}
   metroInputSource: 0

@@ -10,7 +10,10 @@ public class PlayDisable : MonoBehaviour
     [HideInInspector]
     public bool playIsDisable;
     public bool isPlayerDeath { get; set; } = false;
-    public GameObject player;
+    GameObject player;
+    HiderPlace playerLastHider;
+    public HiderPlace lastPlayerHider { get => playerLastHider; }
+
     public GameObject exitWCNotice;
 
 
@@ -19,6 +22,12 @@ public class PlayDisable : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    //InputSystem接收Exit
     void OnExitHider()
     {
         Debug.Log("退出厕所");
@@ -30,14 +39,8 @@ public class PlayDisable : MonoBehaviour
 
     void Update()
     {
-        if (playIsDisable == true)
-        {
-            exitWCNotice.SetActive(true); //设置提示为显示
-        }
-        if(playIsDisable == false)
-        {
-            exitWCNotice.SetActive(false);
-        }
+        if (playIsDisable){ exitWCNotice.SetActive(true); }//设置提示为显示
+        else { exitWCNotice.SetActive(false); }
     }
 
     public void PlayerSetActive()
@@ -46,9 +49,20 @@ public class PlayDisable : MonoBehaviour
         {
             Debug.LogWarning("玩家在活动是再次设成Active");
             return;
-        }
+        }//重复的设置活动
+
+        playerLastHider = null;
         SoundHelper.EnterToilet();
         player.SetActive(true);
         playIsDisable = false;
+    }
+
+    /// <summary>
+    /// 设置上次玩家躲藏地点
+    /// </summary>
+    /// <param name="hp">躲藏地属性</param>
+    public void SetPlayerLastHider(HiderPlace hp)
+    {
+        playerLastHider = hp;
     }
 }

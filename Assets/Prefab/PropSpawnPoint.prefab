@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 366096161189340034}
   - component: {fileID: 366096161189340033}
   - component: {fileID: 366096161189340032}
-  - component: {fileID: 1258795380596741530}
   m_Layer: 0
   m_Name: PropSpawnPoint
   m_TagString: Untagged
@@ -164,21 +163,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1258795380596741530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366096161189340039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c892bab47debf274aab4084501e978a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info:
-  - "\u9053\u5177\u751F\u6210\u70B9"
-  - "\u5728\u4E00\u6BB5\u65F6\u95F4\u5185\u751F\u6210\u9053\u5177"
 --- !u!1 &366096161352207863
 GameObject:
   m_ObjectHideFlags: 0

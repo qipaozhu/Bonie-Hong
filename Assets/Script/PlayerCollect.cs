@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerCollect : MonoBehaviour
@@ -20,6 +22,7 @@ public class PlayerCollect : MonoBehaviour
     //====游戏对象
     public GameObject deadMenu;
     public GameObject gun;
+    public Slider tiliBar;
     //====设置血量====
     private int maxHealth = 20;
     private int nowHealth = 20;
@@ -36,7 +39,10 @@ public class PlayerCollect : MonoBehaviour
     //====攻击冷却====
     float attackcold;
     int maxattackcold = 1;
-
+    //====体力值====
+    [Min(1)]
+    public int maxTiliValue;
+    int TiliValue;
 
 
     //====道具数量====
@@ -62,6 +68,7 @@ public class PlayerCollect : MonoBehaviour
         anim = GetComponent<Animator>();
         agospeed = speed;
         attackcold = maxattackcold;
+        TiliValue = maxTiliValue;
     }
 
     void Awake()
@@ -95,6 +102,8 @@ public class PlayerCollect : MonoBehaviour
 
         //====血量条====
         UIhealthyManaer.instance.UpdateHealthBar(maxHealth, nowHealth);
+        //体力条
+        tiliBar.value = (float)TiliValue / (float)maxTiliValue;
 
         //====无敌时间减去====
         if (noDamage)
@@ -129,7 +138,7 @@ public class PlayerCollect : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             RaycastHit2D hitinfo = Physics2D.Raycast(
-                Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero, 0.4f, LayerMask.GetMask("Decorate"));
+                Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero, 0.4f, LayerMask.GetMask("PropItem"));
             if (hitinfo.collider != null)
             {
                 hitinfo.transform.gameObject.SendMessage("ClickThis");
@@ -161,6 +170,25 @@ public class PlayerCollect : MonoBehaviour
     {
         Echicken();
     }
+    public void OnSprint()
+    {
+        if (TiliValue > 0)
+        {
+            speed += 7;
+            TiliValue--;
+            Invoke("ResetSpeed", .3f);
+            Invoke("ReChanSprint", 6);
+        }
+        else
+        {
+            SoundHelper.Beep();
+        }
+    }
+    void ReChanSprint()
+    {
+        if(TiliValue >= maxTiliValue) { return; }
+        TiliValue++;
+    }
     //E交互
     public void Echicken()
     {
@@ -171,6 +199,7 @@ public class PlayerCollect : MonoBehaviour
             HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
             if (wc != null)
             {
+                PlayDisable.instance.SetPlayerLastHider(wc);
                 if (wc.IsT)
                 {
                     wc.TryToHideWC();
@@ -180,6 +209,12 @@ public class PlayerCollect : MonoBehaviour
                 {
                     wc.TryToHideParkLot();
                 }
+            }
+            //传送门交互
+            Teleport tp = hitnpc.collider.GetComponent<Teleport>();
+            if(tp!=null)
+            {
+                tp.TeleprotTo();
             }
             //Add here
         }
@@ -216,9 +251,10 @@ public class PlayerCollect : MonoBehaviour
 
     public void AddSpeed()
     {
-        speed += 8;
-        Invoke("ResetSpeed", 1);
-    } void ResetSpeed() { speed = agospeed; }
+        speed += 10;
+        Invoke("ResetSpeed", 1.4f);
+    } 
+    void ResetSpeed() { speed = agospeed; }
 
     public void OpenGun()
     {

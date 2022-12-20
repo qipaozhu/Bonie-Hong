@@ -23,8 +23,6 @@ public class LHspawn : MonoBehaviour
 
         if (FindObjectOfType<HlinControl>() == null)
         {
-            Debug.Log("没有找到LH");
-
             isHlIn = false;
             time -= Time.deltaTime;
             nextHSpawnNotice.text = "下一次生成LH：" + Mathf.Floor(time).ToString();
@@ -45,6 +43,7 @@ public class LHspawn : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!isHlIn) { return; }
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if(pc != null)
         {

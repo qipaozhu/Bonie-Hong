@@ -6,6 +6,7 @@ public class HlinSkill : MonoBehaviour
 {
     public static HlinSkill main { get; private set; }
     AudioSource ads;
+    HlinControl hc;
 
     const int OutOutSkillTime = 20;
 
@@ -13,12 +14,7 @@ public class HlinSkill : MonoBehaviour
     float NoSkilltime;
     bool isLastSkillDone = true;
 
-    bool s_isTuiSkill = false;
-    public bool isTuiSkill { get => s_isTuiSkill; set => s_isTuiSkill = value; }
-
     public float maxTimeNoSkill;
-    [Header("”Œœ∑∂‘œÛ")]
-    public GameObject xiaoZhuPrefab;
 
     void Start()
     {
@@ -26,6 +22,7 @@ public class HlinSkill : MonoBehaviour
         {
             main = this;
             ads = GetComponent<AudioSource>();
+            hc = GetComponent<HlinControl>();
         }
         else
         {
@@ -96,7 +93,7 @@ public class HlinSkill : MonoBehaviour
         Toast.instance.NoticeSkill("ÕÀ£°ÕÀ£°ÕÀ");
         ads.clip = Resources.Load<AudioClip>("tuituitui");
         ads.Play();
-        s_isTuiSkill = true;
+        hc.isTuiSkill = true;
 
         StartCoroutine(OutEnd());
     }
@@ -105,7 +102,6 @@ public class HlinSkill : MonoBehaviour
     {
         yield return new WaitForSeconds(OutOutSkillTime);
 
-        s_isTuiSkill = false;
         ads.Stop();
         ads.clip = null;
         isLastSkillDone = true;

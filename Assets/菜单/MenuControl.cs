@@ -8,14 +8,15 @@ public class MenuControl : MonoBehaviour
 {
     public GameObject pauseMenu;
 
-    public static MenuControl instance { get; private set; }
+    public static MenuControl instance { get; set; }
     public Text version;
+
 
     public void StartHCM() //开始出没
     {
-        Toast.instance.InfoBox("正在加载中...");
-        SceneManager.LoadSceneAsync(1);
+        LoadScene.instance.ToLoadScene(1);
     }
+
     public void QuitHCM() //结束出没
     {
         Application.Quit();
@@ -56,7 +57,6 @@ public class MenuControl : MonoBehaviour
     void Start()
     {
         instance = this;
-
         if (version != null) { version.text = Application.version; }
     }
 }

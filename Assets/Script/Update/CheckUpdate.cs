@@ -17,13 +17,8 @@ public class CheckUpdate : MonoBehaviour
 
     void Start()
     {
-        if(Application.platform != RuntimePlatform.WindowsPlayer)
-        {
-            contText.text = "请及时询问是否有更新";
-            return;
-        }
         WebClient wc = new WebClient();
-        contText.text = "检查更新中......\n太久没响应说明连接超时";
+        contText.text = "检查更新中......\n你可以跳过更新直接进入";
         
         wc.DownloadFileAsync(new System.Uri("https://qipaozhu.github.io/Assets/BonieHong/NewVer.hcm"), newverconfigFilePath());
         wc.DownloadProgressChanged += WebClient_DownloadProgressChanged;
@@ -33,12 +28,17 @@ public class CheckUpdate : MonoBehaviour
 
     void CompleteDownload(object sender,AsyncCompletedEventArgs ace)
     {
-        contText.text = "获取配置中";
+        contText.text = "正在下载配置...";
         string[] verdata = File.ReadAllLines(newverconfigFilePath());
 
         Debug.Log(verdata + newverconfigFilePath());
         if (verdata[0] != Application.version)
         {
+            if (Application.platform != RuntimePlatform.WindowsPlayer)
+            {
+                contText.text = "检测到更新！\n请向作者要最新版";
+                return;
+            }
             contText.text = "检测到更新！\n单击“确定”打开链接下载更新";
             clickButton.onClick.RemoveAllListeners();
             clickButton.onClick.AddListener(OpenDownLink);
