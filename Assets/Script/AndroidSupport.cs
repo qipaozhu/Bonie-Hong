@@ -18,10 +18,11 @@ public class AndroidSupport : MonoBehaviour
     {
 #if UNITY_EDITOR
         return;
-#endif
+#else
         if(Application.platform != RuntimePlatform.Android)
         {
             gameObject.SetActive(false);
         }
+#endif
     }
 }

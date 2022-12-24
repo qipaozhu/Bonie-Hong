@@ -17,16 +17,17 @@ public class HlinControl : MonoBehaviour
     GameObject[] firstToFind;
 
     //血量
-    float health = 50;
-    public TextMesh hlHealthText;
+    float health = 1000;
 
     //冷却时间
     float time = 6;
     [HideInInspector]
     public bool timeOver = false;
 
+    [Header("基本参数设置")]
     //最大速度
     public int speed;
+    public float distanceToDestroyHider;
 
     //音频
     static AudioSource ads;
@@ -78,9 +79,6 @@ public class HlinControl : MonoBehaviour
             Destroy(gameObject);
         }
 
-        //血量的
-
-
         if (target != null) { ai.destination = target.position; }//设置AI目标为设置的目标位置
 
         //====设置声音大小====
@@ -109,16 +107,48 @@ public class HlinControl : MonoBehaviour
     }
 
     //设置目标
+    bool isSawPlayer = false;
+    public bool isSawPlayerToHide { get => isSawPlayer; }
+    
+    public void WasDestroyHider()
+    {
+        isSawPlayer = false;
+        UIManager.main.HenrySawOut();
+    }
     void FindTarget()
     {
         if (CenterCtrl.instance.isHCM)
         {
             bool isDisalbe = PlayDisable.instance.playIsDisable; //检测玩家隐藏状态
-            if (isDisalbe) { target = hlNotFound; }
+            if (isDisalbe)
+            {
+                if (isSawPlayer)
+                {
+                    target = PlayDisable.instance.lastPlayerHider.transform;
+                }
+                else { target = hlNotFound; }
+            }
             else
             {
-                if (firstToFind.Length >= 1){ target = firstToFind[0].transform; }//如果有泓第一个先找的
-                else{ target = player; }
+                if (firstToFind.Length >= 1) { target = firstToFind[0].transform; }//如果有泓第一个先找的
+                else
+                {
+                    target = player;
+                    if (player != null)
+                    {
+                        float offset = (player.position - transform.position).sqrMagnitude;
+                        if (offset <= distanceToDestroyHider * distanceToDestroyHider)
+                        {
+                            isSawPlayer = true;
+                            UIManager.main.SetHenrySaw();
+                        }
+                        else
+                        {
+                            isSawPlayer = false;
+                            UIManager.main.HenrySawOut();
+                        }
+                    }
+                }
             }
         }//如果出没了
 
@@ -128,6 +158,7 @@ public class HlinControl : MonoBehaviour
         }
         else
         {
+            isSawPlayer = false;
             if (s_isTuiSkill)
             {
                 if (PlayDisable.instance.playIsDisable) { target = hlHome; }
@@ -161,12 +192,18 @@ public class HlinControl : MonoBehaviour
         hlTexture.GetComponent<SpriteRenderer>().color = Color.red;
         ps.Play();
         ads.PlayOneShot(hurt);
-        Invoke("ResetColor", .1f);
+        Invoke("ResetColor", .05f);
     }
     void ResetColor()
     {
         ps.Stop();
         hlTexture.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+
+    public void StartToBossWar()
+    {
+        health *= 0.4f;
     }
 
     /// <summary>

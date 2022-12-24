@@ -15,6 +15,7 @@ public class CenterCtrl : MonoBehaviour
     //====出没时间====
     [Header("下一次出没")]
     public int maxTimeToCM;
+    [SerializeField]
     float nextHBonie;
     float fullHBonie;
 
@@ -50,16 +51,6 @@ public class CenterCtrl : MonoBehaviour
     float c_teleCold;
     bool c_isTeleColdDone = true;
     public bool isTeleDone { get { return c_isTeleColdDone; } }
-    
-    //重新开始记时
-    void ResetHL() 
-    {
-        //====记时重置====
-        nextHBonie = Random.Range(60, maxTimeToCM);
-        fullHBonie = nextHBonie;
-        IsHCM = false;
-        hlText.text = "等待复活";
-    }
 
     void Update()
     {
@@ -83,7 +74,7 @@ public class CenterCtrl : MonoBehaviour
         //当树<=0时
         if (TreeCount <= 0)
         {
-            EnderSky.instance.TreeOver();
+            EnderSky.instance.TreeOver();//没事，end会检验树数目
             IsHCM = false;
         }
         //树的显示
@@ -158,7 +149,38 @@ public class CenterCtrl : MonoBehaviour
         //====功能====
         SoundHelper.hCome();
         //===========
-        Invoke("ResetHL", Random.Range(60,240));
+        StartCoroutine(HlHiderTest());
+        StartCoroutine(ResetHLIenu());
         hlText.text = "出没!隐蔽";
     }
+
+    IEnumerator HlHiderTest()
+    {
+        yield return new WaitForSeconds(Random.Range(40, 70));
+        if (PlayDisable.instance.playIsDisable)
+        {
+            StopCoroutine(HlHiderTest());
+            ResetHL();
+        }
+        else
+        {
+            yield break;
+        }
+    }//当玩家一直躲的时候尽快解除出没
+    IEnumerator ResetHLIenu()
+    {
+        yield return new WaitForSeconds(AllSceneSetting.instance.hlBonieTime);
+        StopCoroutine(HlHiderTest());
+        ResetHL();
+    }//当一直在外面浪然后出没时间结束时重置
+    
+    void ResetHL()
+    {
+        //====记时重置====
+        nextHBonie = Random.Range(90, maxTimeToCM);
+        fullHBonie = nextHBonie;
+        IsHCM = false;
+        hlText.text = "正在复活";
+    }//重新开始记时
+
 }

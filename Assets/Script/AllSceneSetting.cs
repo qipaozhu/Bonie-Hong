@@ -13,17 +13,20 @@ public class AllSceneSetting : MonoBehaviour
     float v_EffectSound = 1;
     float v_BackGSound = 0.5f;
 
-    //====树的数量====
+    [Header("树的数量")]
     int v_TreeCount = 5;
     public int TreeCount { get => v_TreeCount; set => v_TreeCount = value; }
 
-    //====道具生成冷却====
+    [Header("道具生成冷却")]
     float v_PropSpawnCold = 10;
     public float PropSpawnCold { get => v_PropSpawnCold; set => v_PropSpawnCold = value; }
 
-    //====林泓下一次生成====
+    [Header("林泓下一次生成")]
     float v_lhNextSpawn = 10;
     public float lhNextSpawn { get => v_lhNextSpawn; set => v_lhNextSpawn = value; }
+
+    [Header("出没时间")]
+    public float hlBonieTime = 60;
 
     private void Awake()
     {

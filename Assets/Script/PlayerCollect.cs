@@ -157,6 +157,7 @@ public class PlayerCollect : MonoBehaviour
         timeNoDamage = timeNoDamageMax;
         noDamage = true;
         nowHealth = Mathf.Clamp(changeHealth + nowHealth, 0, maxHealth);
+        UIManager.main.ShowWarnPanel();
         Debug.Log(nowHealth + "ºÍ" + maxHealth);
     }
 
@@ -166,6 +167,7 @@ public class PlayerCollect : MonoBehaviour
         Debug.Log("WASD°´ÏÂ");
         moveWhere = value.Get<Vector2>();
     }
+
     void OnJiaohu()
     {
         Echicken();
@@ -199,7 +201,6 @@ public class PlayerCollect : MonoBehaviour
             HiderPlace wc = hitnpc.collider.GetComponent<HiderPlace>();
             if (wc != null)
             {
-                PlayDisable.instance.SetPlayerLastHider(wc);
                 if (wc.IsT)
                 {
                     wc.TryToHideWC();

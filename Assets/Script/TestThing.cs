@@ -7,9 +7,6 @@ public class TestThing : MonoBehaviour
 {
     private void Update()
     {
-        if (Keyboard.current.nKey.isPressed)
-        {
-            
-        }
+
     }
 }

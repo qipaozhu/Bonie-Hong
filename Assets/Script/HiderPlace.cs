@@ -36,7 +36,7 @@ public class HiderPlace : MonoBehaviour
     /// </summary>
     public void TryToHideWC()
     {
-        PlayDisable.instance.playIsDisable = true;
+        PlayDisable.instance.SetPlayerHide(this);
         Debug.Log("设置玩家已经禁用状态...");
         SoundHelper.EnterToilet();
         PlayerCollect.instance.gameObject.SetActive(false);
@@ -49,7 +49,7 @@ public class HiderPlace : MonoBehaviour
             Toast.instance.HaveNotice("进入失败！");
             return;
         }
-        PlayDisable.instance.playIsDisable = true;
+        PlayDisable.instance.SetPlayerHide(this);
         SoundHelper.EnterToilet();
         PlayerCollect.instance.gameObject.SetActive(false);
     }
@@ -64,6 +64,7 @@ public class HiderPlace : MonoBehaviour
         health -= damage;
         if(health <=0)
         {
+            PlayDisable.instance.PlayerSetActive();
             Destroy(gameObject);
         }
     }

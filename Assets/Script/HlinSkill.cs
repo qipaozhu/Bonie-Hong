@@ -105,5 +105,6 @@ public class HlinSkill : MonoBehaviour
         ads.Stop();
         ads.clip = null;
         isLastSkillDone = true;
+        hc.isTuiSkill = false;
     }
 }

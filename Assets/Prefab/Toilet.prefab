@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 3996510517076004414}
   - component: {fileID: 3996510517076004409}
   - component: {fileID: 5136395679204304530}
+  - component: {fileID: 7935856145450681233}
   m_Layer: 6
   m_Name: Toilet
   m_TagString: Toitet
@@ -349,8 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32c71b3372dfcb40983303d1779487a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterNotice: {fileID: 4257151655463511870}
-  defColor: {r: 0.86666673, g: 1, b: 0.5019608, a: 1}
+  maxToiletHeath: 3
+  maxParklotHeath: 0
 --- !u!61 &3996510517076004409
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -364,7 +365,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0838604, y: -1.0283269}
+  m_Offset: {x: -0.0838604, y: -0.53272974}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -375,7 +376,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.095678, y: 3.7833464}
+  m_Size: {x: 8.095678, y: 4.774541}
   m_EdgeRadius: 0
 --- !u!50 &5136395679204304530
 Rigidbody2D:
@@ -398,6 +399,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7935856145450681233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996510517076004411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceddd09c8dbbe804881922aaeeb045cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: "\u5395\u6240"
+  health: 0
+  description: "\u8EB2\u907F\u6797\u6CD3\u7684\u597D\u5730\u65B9"
 --- !u!1 &4257151655463511870
 GameObject:
   m_ObjectHideFlags: 0

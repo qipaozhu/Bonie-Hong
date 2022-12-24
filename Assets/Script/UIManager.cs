@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class UIManager : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class UIManager : MonoBehaviour
     public Slider healthBar;
     public Text title;
     public Text description;
+
+    [Header("受伤面板")]
+    public Animator hurtPanel;
 
     private void Start()
     {
@@ -53,6 +57,20 @@ public class UIManager : MonoBehaviour
         else miniMap.GetComponent<Animator>().SetBool("isShow", true);
     }
 
+    public void ShowWarnPanel()//警告时的ui特效
+    {
+        hurtPanel.SetTrigger("isDamage");
+    }
+
+    public void SetHenrySaw()
+    {
+        hurtPanel.SetBool("isHenrySaw", true);
+    }//泓大是否看见玩家
+    public void HenrySawOut()
+    {
+        hurtPanel.SetBool("isHenrySaw", false);
+    }
+
     void Update()
     {
         //====设置道具一数量文字====
@@ -60,20 +78,26 @@ public class UIManager : MonoBehaviour
         prop2.text = PlayerCollect.instance.Prop2Conut.ToString();
         prop3.text = PlayerCollect.instance.Prop3Conut.ToString();
         prop4.text = PlayerCollect.instance.Prop4Conut.ToString();
+        InfoCard();
     }
-    IEnumerator InfoCard()
+
+    void InfoCard()
     {
-        while (true)
+        RaycastHit2D[] hitlist = Physics2D.RaycastAll
+            (Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.up,.5f);
+        if (hitlist.Length <= 0) { infocard.SetActive(false); return; }
+        for (int i = 0; i < hitlist.Length; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast
-                (Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()), Vector2.zero, .5f);
-            if(hit.collider != null)
+            RaycastHit2D hit = hitlist[i];
+         
+            if (hit.collider != null)
             {
                 InfoCard text = hit.collider.GetComponent<InfoCard>();
-                if(text != null)
+                if (text != null)
                 {
+                    Debug.Log(infocard.GetComponent<RectTransform>().position);
                     infocard.SetActive(true);
-                    infocard.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) + new Vector2(2,0);
+                    infocard.GetComponent<RectTransform>().position = Pointer.current.position.ReadValue();
                     title.text = text.objectName;
                     description.text = text.description;
                 }
@@ -82,7 +106,7 @@ public class UIManager : MonoBehaviour
                     infocard.SetActive(false);
                 }
             }
-            yield return null;
+            
         }
     }
 }

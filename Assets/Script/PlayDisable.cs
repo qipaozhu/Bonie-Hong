@@ -8,7 +8,8 @@ public class PlayDisable : MonoBehaviour
     public static PlayDisable instance { get; private set; }
 
     [HideInInspector]
-    public bool playIsDisable;
+    bool playerIsDisable;
+    public bool playIsDisable { get => playerIsDisable; }
     public bool isPlayerDeath { get; set; } = false;
     GameObject player;
     HiderPlace playerLastHider;
@@ -54,15 +55,16 @@ public class PlayDisable : MonoBehaviour
         playerLastHider = null;
         SoundHelper.EnterToilet();
         player.SetActive(true);
-        playIsDisable = false;
+        playerIsDisable = false;
     }
 
     /// <summary>
     /// 设置上次玩家躲藏地点
     /// </summary>
     /// <param name="hp">躲藏地属性</param>
-    public void SetPlayerLastHider(HiderPlace hp)
+    public void SetPlayerHide(HiderPlace hp)
     {
+        playerIsDisable = true;
         playerLastHider = hp;
     }
 }

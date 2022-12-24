@@ -8,7 +8,7 @@ public class TreeSpawn : MonoBehaviour
 
     public void Spawn()
     {
-        Instantiate(tree, gameObject.transform.position, Quaternion.identity);
+        Instantiate(tree, gameObject.transform.position + new Vector3(0, 2, 0), Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -41,5 +41,16 @@ public class HlinDamage : MonoBehaviour
         {
             com.ChangeHealth(damageHealth);
         }
+
+        //∂„≤ÿµÿ…À∫¶
+        HiderPlace hp = other.GetComponent<HiderPlace>();
+        if (hp != null)
+        {
+            if (HlinControl.instance.isSawPlayerToHide)
+            {
+                hp.DamageHider(1);
+                HlinControl.instance.WasDestroyHider();
+            }
+        }
     }
 }

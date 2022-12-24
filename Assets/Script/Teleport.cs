@@ -7,7 +7,6 @@ public class Teleport : MonoBehaviour
     public Transform whereToGo;
     public ParticleSystem telePart;
     Transform player;
-    public GameObject howTeleNotice;
  
     public void TeleprotTo()
     {
@@ -26,7 +25,6 @@ public class Teleport : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         telePart.Stop();
-        howTeleNotice.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -34,7 +32,6 @@ public class Teleport : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc == null) return;
         telePart.Play();
-        howTeleNotice.SetActive(true);
     }
 
     private void Start()

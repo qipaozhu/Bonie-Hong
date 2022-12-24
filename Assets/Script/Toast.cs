@@ -48,6 +48,6 @@ public class Toast : MonoBehaviour
     public void InfoBox(string info)
     {
         GameObject box = Instantiate(messageBoxPrefab,transform,false);
-        box.GetComponentInChildren<Text>().text = info;
+        box.GetComponent<Dialog>().SetDialogText(info);
     }
 }
