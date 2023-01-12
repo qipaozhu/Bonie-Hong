@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.Video;
 
 public class UIManager : MonoBehaviour
 {
@@ -29,8 +30,14 @@ public class UIManager : MonoBehaviour
     public Text title;
     public Text description;
 
-    [Header("受伤面板")]
+    [Header("面板")]
     public Animator hurtPanel;
+    public GameObject videoPlayerPanel;
+
+    [Header("Boss战设置")]
+    public GameObject bonieBar;
+    public GameObject hlHealthBarParent;
+    public Image hlHealth;
 
     private void Start()
     {
@@ -62,6 +69,7 @@ public class UIManager : MonoBehaviour
         hurtPanel.SetTrigger("isDamage");
     }
 
+    #region 泓大是否看见玩家躲进厕所摧毁部分
     public void SetHenrySaw()
     {
         hurtPanel.SetBool("isHenrySaw", true);
@@ -69,6 +77,29 @@ public class UIManager : MonoBehaviour
     public void HenrySawOut()
     {
         hurtPanel.SetBool("isHenrySaw", false);
+    }
+    #endregion
+
+    public void PlaySkillAnimation()
+    {
+        videoPlayerPanel.SetActive(true);
+        videoPlayerPanel.GetComponent<VideoPlayer>().Play();
+        Invoke("ResetSkillAni", 1.7f);
+    }//播放动画部分
+    void ResetSkillAni()
+    {
+        videoPlayerPanel.SetActive(false);
+        videoPlayerPanel.GetComponent<VideoPlayer>().Stop();
+    }
+
+    public void SetBossHealthBar()
+    {
+        bonieBar.SetActive(false);
+        hlHealthBarParent.SetActive(true);
+    }
+    public void SetBossHealthValue(float v)
+    {
+        hlHealth.fillAmount = v;
     }
 
     void Update()

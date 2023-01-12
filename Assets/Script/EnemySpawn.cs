@@ -17,7 +17,7 @@ public class EnemySpawn : MonoBehaviour
         time = coldToSpawn;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //如果没有冷却完毕
         if (!isColdOK)

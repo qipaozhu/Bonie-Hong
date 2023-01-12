@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class CenterCtrl : MonoBehaviour
 {
     public static CenterCtrl instance { get; private set; }
-    public static bool isHFindPlayer;
     //====游戏时间====
     float playTime = 0;
     public float GamePlayTime { get { return playTime; } }
@@ -15,7 +14,6 @@ public class CenterCtrl : MonoBehaviour
     //====出没时间====
     [Header("下一次出没")]
     public int maxTimeToCM;
-    [SerializeField]
     float nextHBonie;
     float fullHBonie;
 
@@ -39,7 +37,9 @@ public class CenterCtrl : MonoBehaviour
     //====BOSS战====
     bool inBossWar = false;
     public bool isBossWar { get => inBossWar; set => inBossWar = value; }
-
+    //====道具数量====
+    bool isPropMax;
+    public bool isPropTooMuch { get => isPropMax; }
 
     [Header("树生成点")]
     public GameObject[] treeSpawn;
@@ -52,6 +52,7 @@ public class CenterCtrl : MonoBehaviour
     bool c_isTeleColdDone = true;
     public bool isTeleDone { get { return c_isTeleColdDone; } }
 
+    bool isRanBossFun = false;
     void Update()
     {
         playTime += Time.deltaTime; //游戏时间加
@@ -63,8 +64,8 @@ public class CenterCtrl : MonoBehaviour
             if (c_teleCold <= 0) c_isTeleColdDone = true; //小于0设置true
         }
 
-        if (nextHBonie > 0 && isHlLife && !inBossWar) 
-            // 如果下一次出没大于0 和 不是boss战 和 泓在，时间减
+        if (nextHBonie > 0 && isHlLife && !inBossWar)
+        // 如果下一次出没大于0 和 不是boss战 和 泓在，时间减
         {
             hlBar.fillAmount = nextHBonie / fullHBonie; //boss条
             hlText.text = Mathf.Floor(nextHBonie).ToString();
@@ -80,9 +81,52 @@ public class CenterCtrl : MonoBehaviour
         //树的显示
         float fillamount = (float)TreeCount / (float)maxTreeCount;
         treeFullBar.fillAmount = 1 - fillamount;
-        
-        if ( nextHBonie <= 0 && !isHCM)// 如果下一次出没小于0，HCM函数
+
+        if (nextHBonie <= 0 && nextHBonie > -1000 && !isHCM)// 如果下一次出没小于0，HCM函数
+        {
             HCMfuncion();
+            nextHBonie = -1999;
+        }
+
+        //如果进入boss战的话
+        if (isBossWar & !isRanBossFun)
+        {
+            ResetHL();
+            isRanBossFun = true;
+            LHspawn.instance.SpawnHenryInBosswar();//防止没有林泓追杀,同时初始化
+            HlinControl.instance.StartToBossWar();
+            PlayerCollect.instance.StartToBossWar();
+            UIManager.main.SetBossHealthBar();
+
+            PlayerCollect.instance.Prop1Conut += 2;
+            PlayerCollect.instance.Prop2Conut += 2;
+            PlayerCollect.instance.Prop3Conut += 2;
+            PlayerCollect.instance.Prop4Conut += 2;
+
+            PropSpawnPoint[] point = FindObjectsOfType<PropSpawnPoint>();
+            for (int i = 0; i < point.Length; i++)
+            {
+                point[i].SetBosswarSpawn();
+            }
+
+            GameObject[] item = GameObject.FindGameObjectsWithTag("PropItem");
+            for (int i = 0; i < item.Length; i++)
+            {
+                Destroy(item[i]);
+            }
+
+            GameObject[] hfirfind = GameObject.FindGameObjectsWithTag("HFirstFind");
+            for (int i = 0; i < hfirfind.Length; i++)
+            {
+                Destroy(hfirfind[i]);
+            }
+        }
+
+        if (GameObject.FindGameObjectsWithTag("PropItem").Length >= 20)
+        {
+            isPropMax = true;
+        }
+        else { isPropMax = false; }
     }
 
     void Start()
@@ -159,7 +203,6 @@ public class CenterCtrl : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(40, 70));
         if (PlayDisable.instance.playIsDisable)
         {
-            StopCoroutine(HlHiderTest());
             ResetHL();
         }
         else
@@ -170,12 +213,13 @@ public class CenterCtrl : MonoBehaviour
     IEnumerator ResetHLIenu()
     {
         yield return new WaitForSeconds(AllSceneSetting.instance.hlBonieTime);
-        StopCoroutine(HlHiderTest());
         ResetHL();
     }//当一直在外面浪然后出没时间结束时重置
     
     void ResetHL()
     {
+        StopCoroutine(ResetHLIenu());
+        StopCoroutine(HlHiderTest());
         //====记时重置====
         nextHBonie = Random.Range(90, maxTimeToCM);
         fullHBonie = nextHBonie;

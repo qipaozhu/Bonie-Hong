@@ -27,7 +27,6 @@ public class CheckUpdate : MonoBehaviour
     {
         string[] verdata = File.ReadAllLines(newverconfigFilePath());
 
-        Debug.Log(verdata + newverconfigFilePath());
         if (verdata[0] != Application.version)
         {
             if (Application.platform != RuntimePlatform.WindowsPlayer)

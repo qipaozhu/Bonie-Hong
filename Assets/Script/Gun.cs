@@ -62,6 +62,6 @@ public class Gun : MonoBehaviour
         if (PlayDisable.instance.playIsDisable) { return; }
         SoundHelper.Fire();
         Instantiate(bullet, muzzle.position, Quaternion.Euler(transform.eulerAngles));
-        PlayerCollect.instance.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gunDireon * -4000, mousePos); //后坐力
+        PlayerCollect.instance.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(gunDireon * -500, mousePos); //后坐力
     }
 }

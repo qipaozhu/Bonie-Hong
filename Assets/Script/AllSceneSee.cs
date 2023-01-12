@@ -11,11 +11,6 @@ public class AllSceneSee : MonoBehaviour
         instance = this;
     }
 
-    public void CallMusicMenu()
-    {
-        MusicControl.instance.ChangeShow();
-    }
-
     public void CallSettingMenu()
     {
         Setting.instance.ShowSetting();

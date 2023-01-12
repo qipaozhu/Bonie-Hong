@@ -22,6 +22,7 @@ public class SoundHelper : MonoBehaviour
     static AudioClip djrsay;
     static AudioClip fire;
     static AudioClip july5;
+    static AudioClip puthead;
 
     //±‰¡ø
     static bool isHCMSound = true;
@@ -30,7 +31,7 @@ public class SoundHelper : MonoBehaviour
     {
         ads = GetComponent<AudioSource>();
         warnHL = Resources.Load<AudioClip>("Hcome");
-        tpSound = Resources.Load<AudioClip>("Teleport_new");
+        tpSound = Resources.Load<AudioClip>("Teleport");
         enterToilet = Resources.Load<AudioClip>("EnterToilet");
         dead = Resources.Load<AudioClip>("Dead");
         beep = Resources.Load<AudioClip>("Beep");
@@ -42,6 +43,7 @@ public class SoundHelper : MonoBehaviour
         djrsay = Resources.Load<AudioClip>("JRsay");
         fire = Resources.Load<AudioClip>("Fire");
         july5 = Resources.Load<AudioClip>("July5");
+        puthead = Resources.Load<AudioClip>("PutOutHead");
     }
 
     void Update()
@@ -107,5 +109,9 @@ public class SoundHelper : MonoBehaviour
     public static void July5()
     {
         ads.PlayOneShot(july5);
+    }
+    public static void PutOutHead()
+    {
+        ads.PlayOneShot(puthead);
     }
 }

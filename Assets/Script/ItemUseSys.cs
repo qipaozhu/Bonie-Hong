@@ -5,16 +5,26 @@ using UnityEngine.UI;
 
 public class ItemUseSys : MonoBehaviour
 {
+    public static ItemUseSys instance;
+
+    public float maxPropCold;
+    float usePropCold;
+    bool isReadyToUseProp = true;
+
     [Header("游戏对象")]
     public GameObject chair;
     public GameObject computer;
+    public GameObject GunFire;
+    public GameObject ball;
     [Header("道具栏")]
     public int prop1AddHealth;
+    public Button[] propMenu;
     [Header("物品栏")]
     public Animator itemBar;
     public Button bigWCWater;
     public Button recycleBin;
 
+    #region InputSystem的快捷键
     //InputSystem快捷键对应
     void OnProp1()
     {
@@ -32,23 +42,43 @@ public class ItemUseSys : MonoBehaviour
     {
         UseEmoji();
     }
+    #endregion
     //用遗照
     public void UseDP()
     {
-        if (PlayerCollect.instance.Prop1Conut < 1 || PlayerCollect.instance.PnowHealth >= PlayerCollect.instance.PmaxHealth)
+        if (PlayerCollect.instance.Prop1Conut < 1 || !isReadyToUseProp)
         {
             SoundHelper.Beep();
             return;
         }
         SoundHelper.OK();
-        PlayerCollect.instance.ChangeHealth(prop1AddHealth);
+        if (PlayerCollect.instance.PnowHealth < PlayerCollect.instance.PmaxHealth) 
+        {
+            PlayerCollect.instance.ChangeHealth(prop1AddHealth);
+            if (CenterCtrl.instance.isBossWar)
+            {
+                PlayerCollect.instance.ChangeHealth(prop1AddHealth);
+            }
+        }
+
+        if (CenterCtrl.instance.isBossWar)
+        {
+            Invoke("SpawnBallOnPlayerPos", 1.7f);
+            SoundHelper.PutOutHead();
+            UIManager.main.PlaySkillAnimation();
+        }
         PlayerCollect.instance.Prop1Conut--;
+        isReadyToUseProp = false;
+    }
+    void SpawnBallOnPlayerPos()
+    {
+        Instantiate(ball, PlayerCollect.instance.transform.position, Quaternion.identity);
     }
 
     //用个人信息
     public void UseIF()
     {
-        if (!CenterCtrl.instance.isHCM || PlayerCollect.instance.Prop2Conut <= 0)
+        if (PlayerCollect.instance.Prop2Conut <= 0 || !isReadyToUseProp)
         {
             SoundHelper.Beep();
             return;
@@ -56,12 +86,13 @@ public class ItemUseSys : MonoBehaviour
         SoundHelper.OK();
         HlinControl.instance.SetSpeed();
         PlayerCollect.instance.Prop2Conut--;
+        isReadyToUseProp= false;
     }
 
     //用秋键
     public void UseDJR()
     {
-        if (PlayerCollect.instance.Prop3Conut <= 0)
+        if (PlayerCollect.instance.Prop3Conut <= 0 || !isReadyToUseProp )
         {
             SoundHelper.Beep();
             return;
@@ -70,18 +101,25 @@ public class ItemUseSys : MonoBehaviour
         SoundHelper.OK();
         PlayerCollect.instance.AddSpeed();
         PlayerCollect.instance.Prop3Conut--;
+        isReadyToUseProp= false;
     }
     //用表情
     public void UseEmoji()
     {
-        if (PlayerCollect.instance.Prop4Conut <= 0)
+        if (PlayerCollect.instance.Prop4Conut <= 0 || !isReadyToUseProp)
         {
             SoundHelper.Beep();
             return;
         }
         SoundHelper.OK();
         PlayerCollect.instance.OpenGun();
+
+        if(CenterCtrl.instance.isBossWar)
+        {
+            Instantiate(GunFire, PlayerCollect.instance.transform.position, Quaternion.identity);
+        }
         PlayerCollect.instance.Prop4Conut--;
+        isReadyToUseProp= false;
     }
 
     //大厕头水物品
@@ -119,6 +157,16 @@ public class ItemUseSys : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SetGUI());
+        instance = this;
+        usePropCold = maxPropCold;
+    }
+    private void Update()
+    {
+        if (!isReadyToUseProp)
+        {
+            if (usePropCold <= 0) { isReadyToUseProp = true; usePropCold = maxPropCold; }
+            usePropCold -= Time.deltaTime;
+        }
     }
 
     private IEnumerator SetGUI()
@@ -130,6 +178,7 @@ public class ItemUseSys : MonoBehaviour
         while (true)
         {
             yield return null;
+            #region 物品UI设置
             if (PlayerCollect.instance.Item1Conut > 0)
             {
                 bigWCWater.interactable = true;
@@ -138,7 +187,7 @@ public class ItemUseSys : MonoBehaviour
             {
                 bigWCWater.interactable = false;
             }
-            //道具2
+
             if (PlayerCollect.instance.Item2Conut > 0)
             {
                 recycleBin.interactable = true;
@@ -147,6 +196,25 @@ public class ItemUseSys : MonoBehaviour
             {
                 recycleBin.interactable = false;
             }
+            #endregion
+
+            #region 道具UI设置
+            if (isReadyToUseProp)
+            {
+                for (int i = 0; i < propMenu.Length; i++)
+                {
+                    propMenu[i].interactable = true;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < propMenu.Length; i++)
+                {
+                    propMenu[i].interactable = false;
+                }
+            }
+            #endregion
         }
     }
+    
 }

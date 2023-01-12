@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9222354106632551304}
   m_Layer: 3
   m_Name: Emoji
-  m_TagString: Untagged
+  m_TagString: PropItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

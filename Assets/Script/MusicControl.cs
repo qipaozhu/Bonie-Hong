@@ -5,7 +5,6 @@ using UnityEngine;
 public class MusicControl : MonoBehaviour
 {
     public static MusicControl instance { get; private set; }
-    Animator anm;
     AudioSource ads;
 
     void Awake()
@@ -13,9 +12,7 @@ public class MusicControl : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            anm = GetComponent<Animator>();
             ads = GetComponent<AudioSource>();
-            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -26,19 +23,5 @@ public class MusicControl : MonoBehaviour
     void Update()
     {
         ads.volume = AllSceneSetting.instance.BackGSound;
-    }
-
-    public void ChangeShow()
-    {
-        if (anm.GetBool("isShow")) 
-        {
-            SoundHelper.Click();
-            anm.SetBool("isShow", false);
-        }
-        else
-        {
-            SoundHelper.Click();
-            anm.SetBool("isShow", true);
-        }
     }
 }

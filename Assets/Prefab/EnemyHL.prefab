@@ -201,9 +201,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hlTexture: {fileID: 5855666316402901781}
+  maxHenryHealth: 2500
   timeOver: 0
   speed: 8
   distanceToDestroyHider: 20
+  henryAni: {fileID: 1819943448647333373}
 --- !u!114 &5855666314924642161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4597a9dc9d8d6a947b2a8001c5406110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageHealth: -5
+  damageHealth: -38
 --- !u!82 &5855666314924642162
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5097,7 +5099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7436f4f11cdc5428b61b241f2f3ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTimeNoSkill: 0
+  maxTimeNoSkill: 30
 --- !u!1 &5855666316402901781
 GameObject:
   m_ObjectHideFlags: 0
@@ -5224,8 +5226,8 @@ MonoBehaviour:
   - {fileID: 8885429230136785362}
   - {fileID: 7741161594937190306}
   m_Bounds:
-    m_Center: {x: -0.02145505, y: -0.56753135, z: 0}
-    m_Extent: {x: 2.5385456, y: 3.2229395, z: 0}
+    m_Center: {x: -0.019511938, y: -0.56757593, z: 0}
+    m_Extent: {x: 2.5385923, y: 3.222895, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &7278670388156393422
@@ -5281,13 +5283,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7435045376236799205}
-  m_LocalRotation: {x: 0, y: 0, z: -0.70191437, w: 0.7122614}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7014004, w: 0.7127675}
   m_LocalPosition: {x: -0.085138395, y: 1.754541, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5855666316402901782}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.079}
 --- !u!1 &7912053720746726848
 GameObject:
   m_ObjectHideFlags: 0

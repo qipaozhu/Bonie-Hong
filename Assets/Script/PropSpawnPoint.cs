@@ -9,34 +9,39 @@ public class PropSpawnPoint : MonoBehaviour
 
     float maxWaitSpawnTime;
     float time;
-    bool isPlayerPickUpProp;
 
     void Start()
     {
-        isPlayerPickUpProp = true;
         maxWaitSpawnTime = AllSceneSetting.instance.PropSpawnCold;
     }
 
     void FixedUpdate()
     {
+        if (CenterCtrl.instance.isPropTooMuch && gameObject.tag == "PropSpawn")
+        {
+            lastSpawnTime.text = "道具太多";
+            return;
+        }
+        if(!CenterCtrl.instance.isBossWar && gameObject.tag != "PropSpawn")
+        {
+            return;
+        }
         if (time <= 0)
         {
             Instantiate(propTool[Random.Range(0, propTool.Length)], gameObject.transform.position, Quaternion.identity);
-            isPlayerPickUpProp = false;
-            lastSpawnTime.text = "已经生成";
 
             time = maxWaitSpawnTime;
         }
-        else if(isPlayerPickUpProp)
+        else
         {
             lastSpawnTime.text = Mathf.Floor(time).ToString();
             time -= Time.deltaTime;
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    public void SetBosswarSpawn()
     {
-        //====检测玩家是否在碰撞体内====
-        isPlayerPickUpProp = true;
+        time = 1;
+        maxWaitSpawnTime = 30;
     }
 }

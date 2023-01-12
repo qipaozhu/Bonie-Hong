@@ -32,6 +32,7 @@ public class LoadScene : MonoBehaviour
             if (ao.progress == 1)
             {
                 loading.SetActive(false);
+                loadBar.fillAmount = 0;
                 break;
             }
         }

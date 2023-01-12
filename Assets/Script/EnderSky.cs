@@ -19,18 +19,21 @@ public class EnderSky : MonoBehaviour
     {
 
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
-        if (pc == null || CenterCtrl.instance.lastTreeConut > 0) return;
+        if (pc == null || CenterCtrl.instance.lastTreeConut > 0 || CenterCtrl.instance.isBossWar) return;
 
-        SoundHelper.CompeleGame();
-        End();
+        pc.transform.position += new Vector3(0, 8);
+
+        CenterCtrl.instance.isBossWar= true;
+        //SoundHelper.CompeleGame();
+        //End();
     }
 
-    void End()
+    public void End()
     {
+        SoundHelper.CompeleGame();
         endNotice.SetActive(true);
         playTimeNotice.text = "ƒ„”ŒÕÊ¡À£∫" + Mathf.Floor(CenterCtrl.instance.GamePlayTime).ToString() + "√Î";
         Time.timeScale = 0;

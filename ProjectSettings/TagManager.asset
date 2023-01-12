@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - LHome
   - HFirstFind
+  - PropItem
+  - PropSpawn
   layers:
   - Default
   - TransparentFX

@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6024796118036233833}
   m_Layer: 3
   m_Name: ATTUMN
-  m_TagString: Untagged
+  m_TagString: PropItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

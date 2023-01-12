@@ -33,7 +33,7 @@ public class Bullet : MonoBehaviour
         HlinControl hc = other.gameObject.GetComponent<HlinControl>();
         if (hc != null)
         {
-            hc.DamageHL(4);
+            hc.DamageHL(makeEnemyDamage);
             Destroy(gameObject);
         }
     }

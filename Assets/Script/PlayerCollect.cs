@@ -1,11 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -24,7 +20,7 @@ public class PlayerCollect : MonoBehaviour
     public GameObject gun;
     public Slider tiliBar;
     //====设置血量====
-    private int maxHealth = 20;
+    public int maxHealth = 20;
     private int nowHealth = 20;
     //====传出血量====
     public int PnowHealth { get { return nowHealth; } }
@@ -38,7 +34,7 @@ public class PlayerCollect : MonoBehaviour
     Vector2 moveWhere;
     //====攻击冷却====
     float attackcold;
-    int maxattackcold = 1;
+    public float maxattackcold;
     //====体力值====
     [Min(1)]
     public int maxTiliValue;
@@ -118,20 +114,10 @@ public class PlayerCollect : MonoBehaviour
             attackcold -= Time.deltaTime;  
         }
         
-        //====点击r砍树====
-        if (Keyboard.current.rKey.wasPressedThisFrame && attackcold <= 0 && !EventSystem.current.IsPointerOverGameObject()) 
+        //====点击q砍树====
+        if (Keyboard.current.qKey.wasPressedThisFrame) 
         {
-            RaycastHit2D hit = Physics2D.Raycast(ridy.position, lookWhere, 3f, LayerMask.GetMask("CanNPC"));
-            anim.SetTrigger("Attack");
-            if (hit.collider != null)
-            {
-                TreeControl tc;
-                if(tc = hit.collider.GetComponent<TreeControl>())
-                {
-                    tc.DestroyTreeByClick();
-                }
-            }
-            attackcold = maxattackcold;
+            Attack();
         }
 
         //====点击地图上的东西获取道具====
@@ -157,10 +143,18 @@ public class PlayerCollect : MonoBehaviour
         timeNoDamage = timeNoDamageMax;
         noDamage = true;
         nowHealth = Mathf.Clamp(changeHealth + nowHealth, 0, maxHealth);
-        UIManager.main.ShowWarnPanel();
+        if(changeHealth < 0)
+        {
+            UIManager.main.ShowWarnPanel();
+        }
         Debug.Log(nowHealth + "和" + maxHealth);
     }
-
+    //进入boss战设置
+    public void StartToBossWar()
+    {
+        maxHealth *= 2;
+        nowHealth *= 2;
+    }
     //WASD移动
     void OnMove(InputValue value)
     {
@@ -172,6 +166,36 @@ public class PlayerCollect : MonoBehaviour
     {
         Echicken();
     }
+
+    public void Attack()
+    {
+        if (attackcold > 0) { return; }
+        RaycastHit2D hit = Physics2D.Raycast(ridy.position, lookWhere, 3f, LayerMask.GetMask("CanNPC"));
+        anim.SetTrigger("Attack");
+        if (hit.collider != null)
+        {
+            TreeControl tc;
+            if (tc = hit.collider.GetComponent<TreeControl>())
+            {
+                tc.DestroyTreeByClick();
+            }
+        }
+        RaycastHit2D hitenemy = Physics2D.Raycast(ridy.position, lookWhere, 3f, LayerMask.GetMask("EnemyHL"));
+        if (hitenemy.collider != null)
+        {
+            HlinControl hl;
+            if (hl = hit.collider.GetComponent<HlinControl>())
+            {
+                hl.DamageHL(20);
+                if (CenterCtrl.instance.isBossWar)
+                {
+                    hl.DamageHL(40);
+                }
+            }
+        }
+        attackcold = maxattackcold;
+    }
+
     public void OnSprint()
     {
         if (TiliValue > 0)

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 760849896551023944}
   - component: {fileID: 760849896551023943}
   - component: {fileID: 760849896551023942}
-  - component: {fileID: 2687696612232935982}
   m_Layer: 8
   m_Name: Chair
   m_TagString: HFirstFind
@@ -98,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f08a5bcfaea7b45b6fdbf7eee1331c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 16
+  maxHealth: 6
 --- !u!61 &760849896551023943
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,17 +145,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &2687696612232935982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 760849896551023941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c892bab47debf274aab4084501e978a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info:
-  - "\u6548\u679C\uFF1A\u6CD3\u5927\u4F1A\u5148\u6765\u5BF9\u53F7\u5165\u5750"

@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  makeEnemyDamage: 3
-  destoryDistance: 100
+  makeEnemyDamage: 10
+  destoryDistance: 130
 --- !u!50 &612233120802100641
 Rigidbody2D:
   serializedVersion: 4

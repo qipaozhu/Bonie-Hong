@@ -18,6 +18,8 @@ public class HlinControl : MonoBehaviour
 
     //血量
     float health = 1000;
+    [Min(20)]
+    public float maxHenryHealth;
 
     //冷却时间
     float time = 6;
@@ -28,6 +30,9 @@ public class HlinControl : MonoBehaviour
     //最大速度
     public int speed;
     public float distanceToDestroyHider;
+
+    public Animator henryAni;
+    Vector2 lastPos;
 
     //音频
     static AudioSource ads;
@@ -69,6 +74,7 @@ public class HlinControl : MonoBehaviour
 
         target = player;
         ai.maxSpeed = speed;
+        health = maxHenryHealth;
     }
 
     void Update()
@@ -78,7 +84,10 @@ public class HlinControl : MonoBehaviour
             SoundHelper.July5();
             Destroy(gameObject);
         }
-
+        if (CenterCtrl.instance.isBossWar)
+        {
+            UIManager.main.SetBossHealthValue(health / maxHenryHealth);
+        }
         if (target != null) { ai.destination = target.position; }//设置AI目标为设置的目标位置
 
         //====设置声音大小====
@@ -104,6 +113,15 @@ public class HlinControl : MonoBehaviour
 
         //目标自动选择
         FindTarget();
+
+        //判断向右走还是左
+        Vector2 nowPos = transform.position;
+        if(nowPos.x - lastPos.x != 0)
+        {
+            if(nowPos.x < lastPos.x) henryAni.SetFloat("x",0);
+            else henryAni.SetFloat("x", 1);
+        }
+        lastPos = nowPos;
     }
 
     //设置目标
@@ -114,6 +132,7 @@ public class HlinControl : MonoBehaviour
     {
         isSawPlayer = false;
         UIManager.main.HenrySawOut();
+        Toast.instance.HaveNotice("厕所耐久-1");
     }
     void FindTarget()
     {
@@ -154,7 +173,11 @@ public class HlinControl : MonoBehaviour
 
         else if (CenterCtrl.instance.isBossWar)
         {
-
+            if (firstToFind.Length >= 1) { target = firstToFind[0].transform; }//如果有泓第一个先找的
+            else
+            {
+                target = player;
+            }
         }
         else
         {
@@ -191,7 +214,10 @@ public class HlinControl : MonoBehaviour
         health -= healthy;
         hlTexture.GetComponent<SpriteRenderer>().color = Color.red;
         ps.Play();
-        ads.PlayOneShot(hurt);
+        if (!ads.isPlaying)
+        {
+            ads.PlayOneShot(hurt);
+        }
         Invoke("ResetColor", .05f);
     }
     void ResetColor()
@@ -200,10 +226,12 @@ public class HlinControl : MonoBehaviour
         hlTexture.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
-
+    //进入boss战设置
     public void StartToBossWar()
     {
-        health *= 0.4f;
+        health *= 0.8f;
+        maxHenryHealth *= 0.8f;
+        speed = 5;
     }
 
     /// <summary>

@@ -5,14 +5,15 @@ using UnityEngine;
 public class HlinDamage : MonoBehaviour
 {
     Rigidbody2D rb;
-    [Range(-100,-1)]
+    HlinControl hc;
+    [Range(-1000,-1)]
     public int damageHealth;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        hc = GetComponent<HlinControl>();
     }
-
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -20,11 +21,12 @@ public class HlinDamage : MonoBehaviour
         PlayerCollect pc = other.gameObject.GetComponent<PlayerCollect>();
         if (pc != null)
         {
-            if (HlinControl.instance.timeOver == true)
+            if (hc.timeOver == true)
             {
                 HlinControl.Found();
-                HlinControl.instance.timeOver = false;
+                hc.timeOver = false;
             }
+            hc.henryAni.SetTrigger("Attack");
             pc.ChangeHealth(damageHealth);
         }
 
@@ -32,14 +34,16 @@ public class HlinDamage : MonoBehaviour
         CHAIR ch = other.gameObject.GetComponent<CHAIR>();
         if(ch != null)
         {
-            ch.ChangeHealth(damageHealth);
+            hc.henryAni.SetTrigger("Attack");
+            ch.ChangeHealth(-1);
         }
 
         //µÁƒ‘…À∫¶
         COMPUTER com = other.GetComponent<COMPUTER>();
         if(com != null)
         {
-            com.ChangeHealth(damageHealth);
+            hc.henryAni.SetTrigger("Attack");
+            com.ChangeHealth(-1);
         }
 
         //∂„≤ÿµÿ…À∫¶
@@ -48,8 +52,10 @@ public class HlinDamage : MonoBehaviour
         {
             if (HlinControl.instance.isSawPlayerToHide)
             {
+                hc.henryAni.SetTrigger("Attack");
                 hp.DamageHider(1);
-                HlinControl.instance.WasDestroyHider();
+                SoundHelper.DestroyTree();
+                hc.WasDestroyHider();
             }
         }
     }
