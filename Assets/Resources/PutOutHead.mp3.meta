@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Resources/Beep.wav.meta
+guid: 860698cb96d776d4b940648238198f08
+=======
 guid: 3941100064b726d498e6e6ef193a3d6e
+>>>>>>> 2.3：新增Boss战和手机版支持。修改了部分游戏值。增加了部分动画，道具在Boss战有对应功能，技能冷却等。优化了部分UI。:Assets/Resources/PutOutHead.mp3.meta
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
