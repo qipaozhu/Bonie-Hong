@@ -1,19 +1,16 @@
 # 泓出没（Chinese Only）
-![logo](https://qipaozhu.github.io/Assets/BonieHong/logo.png)
-- 泓出没是一位同学为报复泓做出的作品与想法，同时进行持续更新
-- 由于这是本人的第一个Unity项目，会有些Bug，还有堆成屎山的代码。仅供参考
-# 如何打开
-使用Unity2020.3.26f1c1版本。我使用Visual Studio 2022进行C#脚本编辑。输入系统使用InputSystem
+- 泓出没是我为报复泓而编写的作品。由于该人执迷不悟，所以有很多想法没能实现。
+- 由于学业问题，该项目可能停止更新，只进行bug修复。
+- 由于这是我的第一个Unity项目，会有些Bug，还有堆成屎山的代码。仅供参考。
+# 编辑器版本
+Unity使用Unity2020.3.26f1c1（LTS）版本。
+脚本编辑使用Visual Studio 2022。
 # 进度
-正常情况下我们都会在进行更新
-## 当前更新目标
-- [X] 道具快捷键功能
-- [X] Boss战功能
-- [X] 道具使用技能方法
-- [X] 鼠标点击拾起道具
+由于学业问题，该项目可能停止更新，只进行bug修复
+## 剩余计划
 - [ ] 小怪功能
 - [ ] 改进UI
 
 # 玩法
-- 在HL的追杀下活下去，砍完树你就赢了
+- 在HL的追杀下活下去，砍完树去打Boss。Boss打死了你就赢了
 [查看Wiki](https://github.com/qipaozhu/Bonie-Hong/wiki)

@@ -204,7 +204,7 @@ MonoBehaviour:
   maxHenryHealth: 2500
   timeOver: 0
   speed: 8
-  distanceToDestroyHider: 20
+  distanceToDestroyHider: 60
   henryAni: {fileID: 1819943448647333373}
 --- !u!114 &5855666314924642161
 MonoBehaviour:
