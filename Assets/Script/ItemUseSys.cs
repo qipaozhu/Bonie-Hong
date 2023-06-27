@@ -63,16 +63,11 @@ public class ItemUseSys : MonoBehaviour
 
         if (CenterCtrl.instance.isBossWar)
         {
-            Invoke("SpawnBallOnPlayerPos", 1.7f);
-            SoundHelper.PutOutHead();
-            UIManager.main.PlaySkillAnimation();
+            Instantiate(ball, PlayerCollect.instance.transform.position, Quaternion.identity);
+            SoundHelper.Fire();
         }
         PlayerCollect.instance.Prop1Conut--;
         isReadyToUseProp = false;
-    }
-    void SpawnBallOnPlayerPos()
-    {
-        Instantiate(ball, PlayerCollect.instance.transform.position, Quaternion.identity);
     }
 
     //用个人信息

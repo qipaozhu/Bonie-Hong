@@ -67,6 +67,11 @@ public class CenterCtrl : MonoBehaviour
         if (nextHBonie > 0 && isHlLife && !inBossWar)
         // 如果下一次出没大于0 和 不是boss战 和 泓在，时间减
         {
+            if (TreeCount <= 0)
+            {
+                hlText.text = "Boss战";
+                return;
+            }
             hlBar.fillAmount = nextHBonie / fullHBonie; //boss条
             hlText.text = Mathf.Floor(nextHBonie).ToString();
             nextHBonie = nextHBonie - Time.deltaTime;
@@ -75,6 +80,8 @@ public class CenterCtrl : MonoBehaviour
         //当树<=0时
         if (TreeCount <= 0)
         {
+            ResetHL();
+            hlText.text = "Boss战";
             EnderSky.instance.TreeOver();//没事，end会检验树数目
             IsHCM = false;
         }

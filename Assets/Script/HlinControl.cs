@@ -182,6 +182,7 @@ public class HlinControl : MonoBehaviour
         else
         {
             isSawPlayer = false;
+            UIManager.main.HenrySawOut();
             if (s_isTuiSkill)
             {
                 if (PlayDisable.instance.playIsDisable) { target = hlHome; }
